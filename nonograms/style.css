@@ -60,6 +60,10 @@ body {
   background-color: rgb(40, 122, 122);
 }
 
+.cols.col-10 {
+  grid-template-columns: repeat(10, 1fr);
+}
+
 .rows {
   display: grid;
   grid-template-columns: 1fr;
@@ -68,6 +72,10 @@ body {
   height: 80%;
 
   background-color: antiquewhite;
+}
+
+.rows.row-10 {
+  grid-template-rows: repeat(10, 1fr);
 }
 
 .cells {
@@ -81,6 +89,13 @@ body {
   box-sizing: border-box;
   background-color: transparent;
 }
+
+.cells.cells-10 {
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+
 
 .col {
   border-top: 2px solid var(--border-color);
