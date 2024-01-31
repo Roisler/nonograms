@@ -13,6 +13,7 @@ body {
 
 .page {
   display: flex;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
   align-items: center;
@@ -36,6 +37,17 @@ body {
   box-sizing: border-box;
   border: 2px solid var(--border-color);
   border-collapse: collapse;
+}
+
+.options-wrapper {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.options {
+  width: 20%;
 }
 
 .col,

@@ -1,17 +1,12 @@
 import hints from './assets/js/hints.js';
 
-const initialGame = {
-  complexity: 10,
-  level: 'rabbit',
-};
+// Генерирование подсказок
 
-const { complexity, level } = initialGame;
-
-const generateColHints = (lvl, index) => {
+const generateColHints = (lvl, index, difficult) => {
   let currentSumHint = 0;
   const resultArrHintsCol = [];
 
-  const arrHints = hints[complexity][lvl].reduce((acc, current) => {
+  const arrHints = hints[difficult][lvl].reduce((acc, current) => {
     acc.push(current[index]);
     return acc;
   }, []);
@@ -28,11 +23,11 @@ const generateColHints = (lvl, index) => {
   return resultArrHintsCol;
 };
 
-const generateRowHints = (lvl, index) => {
+const generateRowHints = (lvl, index, difficult) => {
   let currentSumHint = 0;
   const resultArrHintsRow = [];
 
-  const arrHints = hints[complexity][lvl][index];
+  const arrHints = hints[difficult][lvl][index];
 
   for (let i = 0; i <= arrHints.length; i += 1) {
     const current = arrHints[i];
@@ -46,93 +41,163 @@ const generateRowHints = (lvl, index) => {
   return resultArrHintsRow;
 };
 
-const initialMatrix = () => {
+// Инициализация матрицы, заполненной нулями с длиной массива равной сложности кроссворда
+const initialMatrix = (difficult) => {
   const matrix = Array.from(
-    { length: complexity },
-    () => Array.from({ length: complexity }, () => 0),
+    { length: difficult },
+    () => Array.from({ length: difficult }, () => 0),
   );
   return matrix;
 };
 
-const matrix = initialMatrix();
-
+// Проверка на совпадение матрицы решаемого кроссворда с текущей
 const isEqual = (arr, hint) => JSON.stringify(arr) === JSON.stringify(hint);
 
+// Создание и поиск элементов
 const body = document.querySelector('body');
 body.classList.add('page');
+
+const optionsWrapper = document.createElement('fieldset');
+optionsWrapper.classList.add('options-wrapper');
+
+const optionsComplexity = document.createElement('select');
+optionsComplexity.classList.add('options');
+
+const optionsCrossword = document.createElement('select');
+optionsCrossword.classList.add('options');
+
+const startButton = document.createElement('button');
+startButton.classList.add('button');
+startButton.textContent = 'Start Game';
+
+const loadButton = document.createElement('button');
+loadButton.classList.add('button');
+loadButton.textContent = 'Continue last game';
+
+Object.keys(hints).forEach((key) => {
+  const option = document.createElement('option');
+  option.classList.add('option');
+  option.setAttribute('value', key);
+
+  option.textContent = `${key}x${key}`;
+  optionsComplexity.append(option);
+});
+
+const selectCrossword = (value, parent) => {
+  Object.keys(hints[value]).forEach((optionKey) => {
+    const crossword = document.createElement('option');
+    crossword.classList.add('option');
+    crossword.setAttribute('value', optionKey);
+
+    crossword.textContent = optionKey;
+    parent.append(crossword);
+  });
+};
+
+optionsComplexity.addEventListener('change', (e) => {
+  optionsCrossword.replaceChildren();
+  selectCrossword(e.target.value, optionsCrossword);
+});
+
+selectCrossword(5, optionsCrossword);
+optionsWrapper.append(optionsComplexity);
+optionsWrapper.append(optionsCrossword);
+optionsWrapper.append(startButton, loadButton);
+
 const container = document.createElement('div');
 container.classList.add('container');
 body.prepend(container);
-const timer = document.createElement('div');
-timer.classList.add('timer');
-container.append(timer);
-const collsContainer = document.createElement('div');
-collsContainer.classList.add('cols');
-const rowsContainer = document.createElement('div');
-rowsContainer.classList.add('rows');
-const cellsContainer = document.createElement('div');
-cellsContainer.classList.add('cells');
+body.prepend(optionsWrapper);
 
-container.append(collsContainer, rowsContainer, cellsContainer);
+const startGame = (difficult, level, wrapper, currentMatrix = null) => {
+  wrapper.replaceChildren();
 
-const clickCell = (cell) => {
-  cell.classList.remove('cross');
-  cell.classList.toggle('fill');
-  const row = Math.floor(cell.id / complexity);
-  const id = cell.id % complexity;
-  matrix[row][id] = matrix[row][id] === 0 ? 1 : 0;
-  if (isEqual(matrix, hints[complexity][level])) {
-    console.log('Вы выиграли!');
+  const matrix = currentMatrix ?? initialMatrix(difficult);
+
+  const collsContainer = document.createElement('div');
+  collsContainer.classList.add('cols');
+  const rowsContainer = document.createElement('div');
+  rowsContainer.classList.add('rows');
+  const cellsContainer = document.createElement('div');
+  cellsContainer.classList.add('cells');
+
+  const timer = document.createElement('div');
+  timer.classList.add('timer');
+
+  container.append(timer, collsContainer, rowsContainer, cellsContainer);
+
+  // Действие при клике на ячейку
+
+  const clickCell = (cell) => {
+    cell.classList.remove('cross');
+    cell.classList.toggle('fill');
+    const row = Math.floor(cell.id / difficult);
+    const id = cell.id % difficult;
+    matrix[row][id] = matrix[row][id] === 0 ? 1 : 0;
+    if (isEqual(matrix, hints[difficult][level])) {
+      console.log('Вы выиграли!');
+    }
+    console.log(matrix);
+  };
+
+  for (let i = 0; i < difficult ** 2; i += 1) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    cell.setAttribute('id', i);
+    cellsContainer.append(cell);
+
+    cell.addEventListener('click', (e) => clickCell(e.target));
+    cell.addEventListener('contextmenu', (e) => {
+      e.preventDefault(); // НЕ ЗАБЫТЬ УБРАТЬ!
+      e.target.classList.remove('fill');
+      e.target.classList.toggle('cross');
+    });
   }
-  console.log(matrix);
+
+  rowsContainer.classList.add(`rows-${difficult}`);
+  collsContainer.classList.add(`cols-${difficult}`);
+  cellsContainer.classList.add(`cells-${difficult}`);
+
+  // Формирование подсказок по рядам
+  for (let i = 1; i <= difficult; i += 1) {
+    const row = document.createElement('div');
+    row.classList.add('row');
+
+    const rowHints = generateRowHints(level, i - 1, difficult);
+    rowHints.forEach((el) => {
+      if (el !== 0) {
+        const hint = document.createElement('p');
+        hint.textContent = el;
+        row.append(hint);
+      }
+    });
+
+    const col = document.createElement('div');
+    col.classList.add('col');
+
+    // Формирование подсказок по колонкам
+    const colHints = generateColHints(level, i - 1, difficult);
+    colHints.forEach((el) => {
+      if (el !== 0) {
+        const hint = document.createElement('p');
+        hint.textContent = el;
+        col.append(hint);
+      }
+    });
+
+    rowsContainer.append(row);
+    collsContainer.append(col);
+  }
 };
 
-for (let i = 0; i < complexity ** 2; i += 1) {
-  const cell = document.createElement('div');
-  cell.classList.add('cell');
-  cell.setAttribute('id', i);
-  cellsContainer.append(cell);
+startButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  startGame(optionsComplexity.value, optionsCrossword.value, container);
+});
 
-  cell.addEventListener('click', (e) => clickCell(e.target));
-  cell.addEventListener('contextmenu', (e) => {
-    // e.preventDefault(); // НЕ ЗАБЫТЬ УБРАТЬ!
-    e.target.classList.remove('fill');
-    e.target.classList.toggle('cross');
-  });
-}
+startGame(optionsComplexity.value, optionsCrossword.value, container);
 
-rowsContainer.classList.add(`rows-${complexity}`);
-collsContainer.classList.add(`cols-${complexity}`);
-cellsContainer.classList.add(`cells-${complexity}`);
-
-for (let i = 1; i <= complexity; i += 1) {
-  const row = document.createElement('div');
-  row.classList.add('row');
-
-  const rowHints = generateRowHints(level, i - 1);
-  rowHints.forEach((el) => {
-    if (el !== 0) {
-      const hint = document.createElement('p');
-      hint.textContent = el;
-      row.append(hint);
-    }
-  });
-
-  const col = document.createElement('div');
-  col.classList.add('col');
-
-  const colHints = generateColHints(level, i - 1);
-  colHints.forEach((el) => {
-    if (el !== 0) {
-      const hint = document.createElement('p');
-      hint.textContent = el;
-      col.append(hint);
-    }
-  });
-
-  rowsContainer.append(row);
-  collsContainer.append(col);
-}
+// Создание элементов ячеек, навешивание слушателей
 
 /* const ctx = canvas.getContext('2d');
 
