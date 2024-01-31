@@ -76,6 +76,7 @@ cellsContainer.classList.add('cells');
 container.append(collsContainer, rowsContainer, cellsContainer);
 
 const clickCell = (cell) => {
+  cell.classList.remove('cross');
   cell.classList.toggle('fill');
   const row = Math.floor(cell.id / complexity);
   const id = cell.id % complexity;
@@ -95,7 +96,8 @@ for (let i = 0; i < complexity ** 2; i += 1) {
   cell.addEventListener('click', (e) => clickCell(e.target));
   cell.addEventListener('contextmenu', (e) => {
     // e.preventDefault(); // НЕ ЗАБЫТЬ УБРАТЬ!
-    console.log(e.target.offsetWidth, e.target.offsetHeight);
+    e.target.classList.remove('fill');
+    e.target.classList.toggle('cross');
   });
 }
 
