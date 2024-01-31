@@ -38,11 +38,6 @@ body {
   border-collapse: collapse;
 }
 
-#cells {
-  position: absolute;
-  z-index: -1;
-}
-
 .col,
 .cell,
 .row {
@@ -52,7 +47,6 @@ body {
 
 .cols {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr;
   width: 80%;
   height: 20%;
@@ -60,29 +54,50 @@ body {
   background-color: rgb(40, 122, 122);
 }
 
-.cols.col-10 {
+.cols-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.cols-10 {
   grid-template-columns: repeat(10, 1fr);
+}
+
+.cols-15 {
+  grid-template-columns: repeat(15, 1fr);
+}
+
+.cols-20 {
+  grid-template-columns: repeat(20, 1fr);
 }
 
 .rows {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, 1fr);
   width: 20%;
   height: 80%;
 
   background-color: antiquewhite;
 }
 
-.rows.row-10 {
+.rows-5 {
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.rows-10 {
   grid-template-rows: repeat(10, 1fr);
+}
+
+.rows-15 {
+  grid-template-rows: repeat(15, 1fr);
+}
+
+.rows-20 {
+  grid-template-rows: repeat(20, 1fr);
 }
 
 .cells {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
   width: 80%;
   height: 80%;
 
@@ -90,22 +105,51 @@ body {
   background-color: transparent;
 }
 
-.cells.cells-10 {
+.cells-5 {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.cells-10 {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
 }
 
-
+.cells-15 {
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+}
 
 .col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   border-top: 2px solid var(--border-color);
 }
 
+.col p {
+  padding: 0;
+}
+
 .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   border-left: 2px solid var(--border-color);
 }
-/*.col,
-.row {
-  border: 2px solid var(--border-color);
-  border-collapse: collapse;
-}*/
+
+.cell {
+  background-color: #fff;
+}
+
+.fill {
+  background-color: #000;
+}
+ p {
+  padding-right: 10px;
+  margin: 0;
+
+  font-size: 26px;
+ }
