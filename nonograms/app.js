@@ -1,8 +1,8 @@
 import hints from './assets/js/hints.js';
 
 const initialGame = {
-  complexity: 5,
-  level: 'batterfly',
+  complexity: 10,
+  level: 'rabbit',
 };
 
 const { complexity, level } = initialGame;
@@ -28,7 +28,7 @@ const generateColHints = (lvl, index) => {
   return resultArrHintsCol;
 };
 
-const generateRowHints = (lvl, index, col = false) => {
+const generateRowHints = (lvl, index) => {
   let currentSumHint = 0;
   const resultArrHintsRow = [];
 
@@ -83,6 +83,7 @@ const clickCell = (cell) => {
   if (isEqual(matrix, hints[complexity][level])) {
     console.log('Вы выиграли!');
   }
+  console.log(matrix);
 };
 
 for (let i = 0; i < complexity ** 2; i += 1) {
@@ -92,6 +93,10 @@ for (let i = 0; i < complexity ** 2; i += 1) {
   cellsContainer.append(cell);
 
   cell.addEventListener('click', (e) => clickCell(e.target));
+  cell.addEventListener('contextmenu', (e) => {
+    // e.preventDefault(); // НЕ ЗАБЫТЬ УБРАТЬ!
+    console.log(e.target.offsetWidth, e.target.offsetHeight);
+  });
 }
 
 rowsContainer.classList.add(`rows-${complexity}`);
