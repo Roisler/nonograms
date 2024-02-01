@@ -1,44 +1,27 @@
 import hints from './assets/js/hints.js';
 
 // Генерирование подсказок
-
-const generateColHints = (lvl, index, difficult) => {
+const generateArrHints = (arr, lvl, index, difficult, type) => {
   let currentSumHint = 0;
-  const resultArrHintsCol = [];
+  const resultArrHints = [];
 
-  const arrHints = hints[difficult][lvl].reduce((acc, current) => {
-    acc.push(current[index]);
-    return acc;
-  }, []);
+  const arrHints = type === 'col'
+    ? arr[difficult][lvl].reduce((acc, current) => {
+      acc.push(current[index]);
+      return acc;
+    }, [])
+    : arr[difficult][lvl][index];
 
   for (let i = 0; i <= arrHints.length; i += 1) {
     const current = arrHints[i];
     if (current) {
       currentSumHint += current;
     } else {
-      resultArrHintsCol.push(currentSumHint);
+      resultArrHints.push(currentSumHint);
       currentSumHint = 0;
     }
   }
-  return resultArrHintsCol;
-};
-
-const generateRowHints = (lvl, index, difficult) => {
-  let currentSumHint = 0;
-  const resultArrHintsRow = [];
-
-  const arrHints = hints[difficult][lvl][index];
-
-  for (let i = 0; i <= arrHints.length; i += 1) {
-    const current = arrHints[i];
-    if (current) {
-      currentSumHint += current;
-    } else {
-      resultArrHintsRow.push(currentSumHint);
-      currentSumHint = 0;
-    }
-  }
-  return resultArrHintsRow;
+  return resultArrHints;
 };
 
 // Инициализация матрицы, заполненной нулями с длиной массива равной сложности кроссворда
@@ -163,7 +146,7 @@ const startGame = (difficult, level, wrapper, currentMatrix = null) => {
     const row = document.createElement('div');
     row.classList.add('row');
 
-    const rowHints = generateRowHints(level, i - 1, difficult);
+    const rowHints = generateArrHints(hints, level, i - 1, difficult, 'row');
     rowHints.forEach((el) => {
       if (el !== 0) {
         const hint = document.createElement('p');
@@ -176,7 +159,7 @@ const startGame = (difficult, level, wrapper, currentMatrix = null) => {
     col.classList.add('col');
 
     // Формирование подсказок по колонкам
-    const colHints = generateColHints(level, i - 1, difficult);
+    const colHints = generateArrHints(hints, level, i - 1, difficult, 'col');
     colHints.forEach((el) => {
       if (el !== 0) {
         const hint = document.createElement('p');
