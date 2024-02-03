@@ -1,8 +1,6 @@
 import hints from './assets/js/hints.js';
 import { resetGame, saveGame, startGame } from './assets/js/buttonActions.js';
-import {
-  difficultKey, levelKey, matrixKey, timeKey,
-} from './assets/js/constants.js';
+import * as ct from './assets/js/constants.js';
 
 const currentGame = {
   difficult: 5,
@@ -22,7 +20,7 @@ container.classList.add('container');
 // Создание элемента-таймера
 const timerElement = document.createElement('div');
 timerElement.classList.add('timer');
-timerElement.textContent = '00:00';
+timerElement.textContent = ct.initialTimerCount;
 
 // Создание контейнера и вариантов кроссворда
 const optionsWrapper = document.createElement('fieldset');
@@ -82,14 +80,14 @@ buttonContainer.classList.add('buttons');
 
 const loadButton = document.createElement('button');
 loadButton.classList.add('button', 'button-load');
-loadButton.textContent = 'Continue last game';
+loadButton.textContent = ct.loadGameText;
 
 loadButton.addEventListener('click', (e) => {
   e.preventDefault();
-  const difficult = Number(localStorage.getItem(difficultKey));
-  const level = localStorage.getItem(levelKey);
-  const matrix = JSON.parse(localStorage.getItem(matrixKey));
-  const time = Number(localStorage.getItem(timeKey));
+  const difficult = Number(localStorage.getItem(ct.difficultKey));
+  const level = localStorage.getItem(ct.levelKey);
+  const matrix = JSON.parse(localStorage.getItem(ct.matrixKey));
+  const time = Number(localStorage.getItem(ct.timeKey));
   optionsComplexity.value = difficult;
   optionsCrossword.replaceChildren();
   selectCrossword(difficult, optionsCrossword);
@@ -99,7 +97,7 @@ loadButton.addEventListener('click', (e) => {
 
 const resetButton = document.createElement('button');
 resetButton.classList.add('button', 'button-reset');
-resetButton.textContent = 'Reset Game';
+resetButton.textContent = ct.resetGameText;
 
 resetButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -108,14 +106,18 @@ resetButton.addEventListener('click', (e) => {
 
 const saveButton = document.createElement('button');
 saveButton.classList.add('button', 'button-save');
-saveButton.textContent = 'Save Game';
+saveButton.textContent = ct.saveGameText;
 
 saveButton.addEventListener('click', (e) => {
   e.preventDefault();
   saveGame(currentGame);
 });
 
-buttonContainer.append(loadButton, resetButton, saveButton);
+const randomGameButton = document.createElement('button');
+randomGameButton.classList.add('button', 'button-random');
+randomGameButton.textContent = ct.randomGameText;
+
+buttonContainer.append(loadButton, resetButton, saveButton, randomGameButton);
 optionsWrapper.append(buttonContainer);
 
 body.prepend(container);

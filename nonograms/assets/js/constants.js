@@ -1,11 +1,14 @@
-const nickname = 'roisler';
-const difficultKey = `${nickname} difficult`;
-const levelKey = `${nickname} level`;
-const matrixKey = `${nickname} matrix`;
-const timeKey = `${nickname} time`;
-const tableKey = `${nickname} table`;
-const timerInterval = 20;
+export const nickname = 'roisler';
+export const difficultKey = `${nickname} difficult`;
+export const levelKey = `${nickname} level`;
+export const matrixKey = `${nickname} matrix`;
+export const timeKey = `${nickname} time`;
+export const tableKey = `${nickname} table`;
 
-export {
-  difficultKey, levelKey, matrixKey, timeKey, timerInterval, tableKey,
-};
+export const timerInterval = 20;
+export const initialTimerCount = '00:00';
+
+export const loadGameText = 'Continue last game';
+export const saveGameText = 'Save Game';
+export const resetGameText = 'Reset Game';
+export const randomGameText = 'Random Game';

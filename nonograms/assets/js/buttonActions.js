@@ -81,6 +81,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       clearInterval(timerId);
       // const saveButton = document.querySelector('.button-save');
       // saveButton.setAttribute('disabled', true);
+      // saveButton.setAttribute('title', 'Я думаю, что не стоит сохранять разгаданный кроссворд');
       setWinTable({ level, difficult, time: currentGame.currentTime });
       console.log(
         `Вы разгадали кроссворд за ${getTime(currentGame)}`,
