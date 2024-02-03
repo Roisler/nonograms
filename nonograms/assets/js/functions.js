@@ -59,12 +59,13 @@ const setWinTable = (result) => {
   console.log(result);
   const date = new Date();
 
-  const table = getWinTable() ?? {};
+  const table = getWinTable() ?? [];
   const hours = date.getHours().toString().padStart(2, 0);
   const minutes = date.getMinutes().toString().padStart(2, 0);
   console.log(minutes);
   const timeString = `${hours}:${minutes}`;
-  table[timeString] = result;
+  table.push({ [timeString]: result });
+  table.sort();
   localStorage.setItem(tableKey, JSON.stringify(table));
 };
 
