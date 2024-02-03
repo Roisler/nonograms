@@ -1,6 +1,6 @@
 import { generateArrHints, initialMatrix, isEqual } from './functions.js';
 import hints from './hints.js';
-import getTime from './timer.js';
+import { getTime, startTime } from './timer.js';
 
 const nickname = 'roisler';
 let timerId;
@@ -8,7 +8,9 @@ const timerInterval = 20;
 
 // Сохранение кроссворда в local storage
 const saveGame = (game) => {
-  const { difficult, level, currentmatrix, currentTime } = game;
+  const {
+    difficult, level, currentmatrix, currentTime,
+  } = game;
   const difficultKey = `${nickname} difficult`;
   const levelKey = `${nickname} level`;
   const matrixKey = `${nickname} matrix`;
@@ -39,12 +41,13 @@ const resetGame = (game) => {
 };
 
 // Начало игры
-const startGame = (game, difficult, level, timer, wrapper) => {
+const startGame = (game, difficult, level, timerElement, wrapper) => {
   wrapper.replaceChildren();
 
   clearInterval(timerId);
 
   const currentGame = game;
+  const timer = timerElement;
 
   currentGame.currentmatrix = initialMatrix(difficult);
   currentGame.currentTime = 0;
@@ -69,7 +72,7 @@ const startGame = (game, difficult, level, timer, wrapper) => {
     cell.classList.toggle('fill');
     console.log(currentGame.currentTime);
     if (!currentGame.currentTime) {
-      timerId = setInterval(() => getTime(game, timer, timerInterval), timerInterval);
+      timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
     }
     const row = Math.floor(cell.id / difficult);
     const id = cell.id % difficult;
@@ -77,7 +80,7 @@ const startGame = (game, difficult, level, timer, wrapper) => {
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
       console.log(
-        `Вы разгадали кроссворд за ${currentGame.currentTime}`,
+        `Вы разгадали кроссворд за ${getTime(currentGame)}`,
       );
     }
     console.log(currentGame.currentmatrix);
@@ -91,10 +94,11 @@ const startGame = (game, difficult, level, timer, wrapper) => {
 
     // Навешивание слушателей на ячейку
     cell.addEventListener('click', (e) => clickCell(e.target));
+    // eslint-disable-next-line no-loop-func
     cell.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       if (!currentGame.currentTime) {
-        timerId = setInterval(() => getTime(game, timer, timerInterval), timerInterval);
+        timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
       }
       e.target.classList.remove('fill');
       e.target.classList.toggle('cross');
@@ -113,7 +117,8 @@ const startGame = (game, difficult, level, timer, wrapper) => {
     const rowHints = generateArrHints(hints, level, i - 1, difficult, 'row');
     rowHints.forEach((el) => {
       if (el !== 0) {
-        const hint = document.createElement('p');
+        const hint = document.createElement('div');
+        hint.classList.add('hint');
         hint.textContent = el;
         row.append(hint);
       }
@@ -126,7 +131,8 @@ const startGame = (game, difficult, level, timer, wrapper) => {
     const colHints = generateArrHints(hints, level, i - 1, difficult, 'col');
     colHints.forEach((el) => {
       if (el !== 0) {
-        const hint = document.createElement('p');
+        const hint = document.createElement('div');
+        hint.classList.add('hint');
         hint.textContent = el;
         col.append(hint);
       }

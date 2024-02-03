@@ -149,16 +149,25 @@ body {
   border-top: 2px solid var(--border-color);
 }
 
-.col p {
+.col>p {
   padding: 0;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: center;
   border-left: 2px solid var(--border-color);
+}
+
+.hint {
+  width: 100%;
+  text-align: center;
+}
+
+.col .hint {
+  height: 100%;
 }
 
 .cell {
@@ -189,5 +198,5 @@ p {
   padding-right: 10px;
   margin: 0;
 
-  font-size: 26px;
+  font-size: 18px;
  }
