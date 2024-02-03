@@ -43,7 +43,7 @@ const resetGame = (game, timer) => {
 };
 
 // Начало игры
-const startGame = (game, difficult, level, timerElement, wrapper) => {
+const startGame = (game, difficult, level, timerElement, wrapper, matrix = null) => {
   wrapper.replaceChildren();
 
   clearInterval(timerId);
@@ -131,6 +131,7 @@ const startGame = (game, difficult, level, timerElement, wrapper) => {
 
     // Формирование подсказок по колонкам
     const colHints = generateArrHints(hints, level, i - 1, difficult, 'col');
+    console.log(colHints);
     colHints.forEach((el) => {
       if (el !== 0) {
         const hint = document.createElement('div');

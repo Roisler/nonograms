@@ -34,4 +34,18 @@ const initialMatrix = (difficult) => {
 // Проверка на совпадение матрицы решаемого кроссворда с текущей
 const isEqual = (arr, hint) => JSON.stringify(arr) === JSON.stringify(hint);
 
-export { generateArrHints, initialMatrix, isEqual };
+// Закрашивание ячеек по сохраненной матрице
+const fillCells = (matrix) => {
+  const flatMatrix = matrix.flat(Infinity);
+
+  const cells = document.querySelectorAll('cell');
+  cells.forEach((cell) => {
+    if (flatMatrix[cell.id]) {
+      cell.classList.add('fill');
+    }
+  });
+};
+
+export {
+  generateArrHints, initialMatrix, isEqual, fillCells,
+};
