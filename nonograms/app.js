@@ -32,15 +32,6 @@ optionsCrossword.classList.add('options');
 const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('buttons');
 
-const startButton = document.createElement('button');
-startButton.classList.add('button');
-startButton.textContent = 'Start Game';
-
-startButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
-});
-
 const loadButton = document.createElement('button');
 loadButton.classList.add('button');
 loadButton.textContent = 'Continue last game';
@@ -64,7 +55,7 @@ saveButton.addEventListener('click', (e) => {
   saveGame(currentGame);
 });
 
-// Создание опций выбора кроссворда
+// Создание опций выбора сложности
 Object.keys(hints).forEach((key) => {
   const option = document.createElement('option');
   option.classList.add('option');
@@ -75,6 +66,7 @@ Object.keys(hints).forEach((key) => {
 });
 
 const selectCrossword = (value, parent) => {
+  // Создание опций выбора кроссворда
   Object.keys(hints[value]).forEach((optionKey) => {
     const crossword = document.createElement('option');
     crossword.classList.add('option');
@@ -91,12 +83,17 @@ optionsComplexity.addEventListener('change', (e) => {
   selectCrossword(e.target.value, optionsCrossword);
 });
 
+optionsCrossword.addEventListener('change', (e) => {
+  const { value } = e.target;
+  startGame(currentGame, optionsComplexity.value, value, timerElement, container);
+});
+
 // Установка начального значения уровня сложности при загрузке страницы
 selectCrossword(5, optionsCrossword);
 
 optionsWrapper.append(optionsComplexity);
 optionsWrapper.append(optionsCrossword);
-buttonContainer.append(startButton, loadButton, resetButton, saveButton);
+buttonContainer.append(loadButton, resetButton, saveButton);
 optionsWrapper.append(buttonContainer);
 
 body.prepend(container);
