@@ -1,5 +1,5 @@
 import {
-  fillCells, generateArrHints, initialMatrix, isEqual,
+  fillCells, generateArrHints, initialMatrix, isEqual, setWinTable,
 } from './functions.js';
 import hints from './hints.js';
 import { getTime, startTime } from './timer.js';
@@ -71,7 +71,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   const clickCell = (cell) => {
     cell.classList.remove('cross');
     cell.classList.toggle('fill');
-    console.log(currentGame.currentTime);
     if (!currentGame.currentTime || currentGame.currentTime === time) {
       timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
     }
@@ -80,11 +79,13 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
+      // const saveButton = document.querySelector('.button-save');
+      // saveButton.setAttribute('disabled', true);
+      setWinTable({ level, difficult, time: currentGame.currentTime });
       console.log(
         `Вы разгадали кроссворд за ${getTime(currentGame)}`,
       );
     }
-    console.log(currentGame.currentmatrix);
   };
 
   for (let i = 0; i < difficult ** 2; i += 1) {

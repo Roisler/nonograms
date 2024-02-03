@@ -1,3 +1,4 @@
+import { tableKey } from './constants.js';
 // Генерирование подсказок
 const generateArrHints = (arr, lvl, index, difficult, type) => {
   let currentSumHint = 0;
@@ -45,6 +46,26 @@ const fillCells = (matrix) => {
   });
 };
 
+// Получение таблицы результатов
+const getWinTable = () => {
+  const table = JSON.parse(localStorage.getItem(tableKey));
+  return table;
+};
+
+// Добавление таблицы результатов
+const setWinTable = (result) => {
+  console.log(result);
+  const date = new Date();
+
+  const table = getWinTable() ?? {};
+  const hours = date.getHours().toString().padStart(2, 0);
+  const minutes = date.getMinutes().toString().padStart(2, 0);
+  console.log(minutes);
+  const timeString = `${hours}:${minutes}`;
+  table[timeString] = result;
+  localStorage.setItem(tableKey, JSON.stringify(table));
+};
+
 export {
-  generateArrHints, initialMatrix, isEqual, fillCells,
+  generateArrHints, initialMatrix, isEqual, fillCells, setWinTable,
 };

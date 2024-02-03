@@ -81,7 +81,7 @@ const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('buttons');
 
 const loadButton = document.createElement('button');
-loadButton.classList.add('button');
+loadButton.classList.add('button', 'button-load');
 loadButton.textContent = 'Continue last game';
 
 loadButton.addEventListener('click', (e) => {
@@ -98,7 +98,7 @@ loadButton.addEventListener('click', (e) => {
 });
 
 const resetButton = document.createElement('button');
-resetButton.classList.add('button');
+resetButton.classList.add('button', 'button-reset');
 resetButton.textContent = 'Reset Game';
 
 resetButton.addEventListener('click', (e) => {
@@ -107,7 +107,7 @@ resetButton.addEventListener('click', (e) => {
 });
 
 const saveButton = document.createElement('button');
-saveButton.classList.add('button');
+saveButton.classList.add('button', 'button-save');
 saveButton.textContent = 'Save Game';
 
 saveButton.addEventListener('click', (e) => {
