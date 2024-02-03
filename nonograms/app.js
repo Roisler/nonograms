@@ -45,8 +45,7 @@ resetButton.textContent = 'Reset Game';
 
 resetButton.addEventListener('click', (e) => {
   e.preventDefault();
-  timerElement.textContent = '00:00';
-  resetGame(currentGame);
+  resetGame(currentGame, timerElement);
 });
 
 const saveButton = document.createElement('button');

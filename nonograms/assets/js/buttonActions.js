@@ -28,16 +28,18 @@ const saveGame = (game) => {
 };
 
 // Сброс кроссворда к начальному состоянию
-const resetGame = (game) => {
+const resetGame = (game, timer) => {
   clearInterval(timerId);
   const currentGame = game;
+  currentGame.currentTime = 0;
+  currentGame.currentmatrix = initialMatrix(currentGame.difficult);
+  const timerElement = timer;
+  timerElement.textContent = getTime(currentGame);
   const cells = document.querySelectorAll('.cell');
   cells.forEach((e) => {
     e.classList.remove('fill');
     e.classList.remove('cross');
   });
-  currentGame.currentTime = 0;
-  currentGame.currentmatrix = initialMatrix(currentGame.difficult);
 };
 
 // Начало игры
@@ -51,7 +53,7 @@ const startGame = (game, difficult, level, timerElement, wrapper) => {
 
   currentGame.currentmatrix = initialMatrix(difficult);
   currentGame.currentTime = 0;
-  timer.textContent = '00:00';
+  timer.textContent = getTime(currentGame);
 
   currentGame.difficult = difficult;
   currentGame.level = level;
