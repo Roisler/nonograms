@@ -92,7 +92,10 @@ const startGame = (game, difficult, level, timer, wrapper) => {
     // Навешивание слушателей на ячейку
     cell.addEventListener('click', (e) => clickCell(e.target));
     cell.addEventListener('contextmenu', (e) => {
-      // e.preventDefault(); // НЕ ЗАБЫТЬ УБРАТЬ КОММЕНТАРИЙ
+      e.preventDefault();
+      if (!currentGame.currentTime) {
+        timerId = setInterval(() => getTime(game, timer, timerInterval), timerInterval);
+      }
       e.target.classList.remove('fill');
       e.target.classList.toggle('cross');
     });
