@@ -16,10 +16,12 @@ body.classList.add('page');
 const container = document.createElement('div');
 container.classList.add('container');
 
+// Создание элемента-таймера
 const timerElement = document.createElement('div');
 timerElement.classList.add('timer');
 timerElement.textContent = '00:00';
 
+// Создание контейнера и вариантов кроссворда
 const optionsWrapper = document.createElement('fieldset');
 optionsWrapper.classList.add('options-wrapper');
 
@@ -29,6 +31,7 @@ optionsComplexity.classList.add('options');
 const optionsCrossword = document.createElement('select');
 optionsCrossword.classList.add('options');
 
+// Создание контейнера и кнопок, навешивание на них слушателей
 const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('buttons');
 
@@ -80,9 +83,12 @@ const selectCrossword = (value, parent) => {
 // Навешивание слушателя на изменение первой опции, для отображения верных вариантов кроссворда
 optionsComplexity.addEventListener('change', (e) => {
   optionsCrossword.replaceChildren();
-  selectCrossword(e.target.value, optionsCrossword);
+  const { value } = e.target;
+  selectCrossword(value, optionsCrossword);
+  startGame(currentGame, value, optionsCrossword.value, timerElement, container);
 });
 
+// Старт игры при выборе кроссворда
 optionsCrossword.addEventListener('change', (e) => {
   const { value } = e.target;
   startGame(currentGame, optionsComplexity.value, value, timerElement, container);
