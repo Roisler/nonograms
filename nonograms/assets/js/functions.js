@@ -1,4 +1,6 @@
 import { tableKey } from './constants.js';
+import hints from './hints.js';
+
 // Генерирование подсказок
 const generateArrHints = (arr, lvl, index, difficult, type) => {
   let currentSumHint = 0;
@@ -66,6 +68,24 @@ const setWinTable = (result) => {
   localStorage.setItem(tableKey, JSON.stringify(table));
 };
 
+const randomize = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
+
+const getRandom = (arr, previous) => {
+  const difficultArr = Object.keys(arr);
+  const difficultIndex = randomize(0, difficultArr.length - 1);
+  const difficult = difficultArr[difficultIndex];
+  const levelsArr = Object.keys(arr[difficult]);
+  const levelIndex = randomize(0, levelsArr.length - 1);
+  const level = levelsArr[levelIndex];
+  if (level === previous) {
+    return getRandom(arr, previous);
+  }
+
+  return { difficult, level };
+};
+
+getRandom(hints);
+
 export {
-  generateArrHints, initialMatrix, isEqual, fillCells, setWinTable,
+  generateArrHints, initialMatrix, isEqual, fillCells, setWinTable, getRandom,
 };

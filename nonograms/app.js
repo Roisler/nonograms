@@ -1,6 +1,7 @@
 import hints from './assets/js/hints.js';
 import { resetGame, saveGame, startGame } from './assets/js/buttonActions.js';
 import * as ct from './assets/js/constants.js';
+import { getRandom } from './assets/js/functions.js';
 
 const currentGame = {
   difficult: 5,
@@ -116,6 +117,16 @@ saveButton.addEventListener('click', (e) => {
 const randomGameButton = document.createElement('button');
 randomGameButton.classList.add('button', 'button-random');
 randomGameButton.textContent = ct.randomGameText;
+
+randomGameButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  const { difficult, level } = getRandom(hints, currentGame.level);
+  optionsComplexity.value = difficult;
+  optionsCrossword.replaceChildren();
+  selectCrossword(difficult, optionsCrossword);
+  optionsCrossword.value = level;
+  startGame(currentGame, difficult, level, timerElement, container);
+});
 
 buttonContainer.append(loadButton, resetButton, saveButton, randomGameButton);
 optionsWrapper.append(buttonContainer);
