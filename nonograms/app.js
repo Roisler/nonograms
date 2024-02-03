@@ -6,6 +6,7 @@ const currentGame = {
   difficult: 5,
   level: 'key',
   currentmatrix: [],
+  currentTime: 0,
 };
 
 // Генерирование подсказок
@@ -68,6 +69,7 @@ const resetGame = () => {
     e.classList.remove('fill');
     e.classList.remove('cross');
   });
+  currentGame.currentTime = 0;
   currentGame.currentmatrix = initialMatrix(currentGame.difficult);
 };
 
@@ -113,6 +115,27 @@ saveButton.addEventListener('click', (e) => {
   saveGame(currentGame);
 });
 
+const timerElement = document.createElement('div');
+timerElement.classList.add('timer');
+timerElement.textContent = '00:00';
+
+// Функция - секундомер
+
+let milliseconds = currentGame.currentTime;
+
+const getTime = () => {
+  milliseconds += 1000;
+  const minutes = Math.floor(milliseconds / 60000);
+  const seconds = (milliseconds % 60000) / 1000;
+
+  const time = `${minutes.toString().padStart(2, 0)}:${seconds.toString().padStart(2, 0)}`;
+
+  currentGame.currentTime = milliseconds;
+  timerElement.textContent = time;
+};
+
+let timerId;
+
 // Создание опций выбора кроссворда
 Object.keys(hints).forEach((key) => {
   const option = document.createElement('option');
@@ -150,14 +173,17 @@ optionsWrapper.append(buttonContainer);
 
 const container = document.createElement('div');
 container.classList.add('container');
+
 body.prepend(container);
 body.prepend(optionsWrapper);
 
 // Начало игры
-const startGame = (difficult, level, wrapper, currentMatrix = null) => {
+const startGame = (difficult, level, timer, wrapper, currentMatrix = null) => {
   wrapper.replaceChildren();
+  clearInterval(timerId);
 
   currentGame.currentmatrix = currentMatrix ?? initialMatrix(difficult);
+  currentGame.currentTime = 0;
 
   currentGame.difficult = difficult;
   currentGame.level = level;
@@ -168,9 +194,6 @@ const startGame = (difficult, level, wrapper, currentMatrix = null) => {
   const cellsContainer = document.createElement('div');
   cellsContainer.classList.add('cells');
 
-  const timer = document.createElement('div');
-  timer.classList.add('timer');
-
   container.append(timer, collsContainer, rowsContainer, cellsContainer);
 
   // Действие при клике на ячейку
@@ -178,11 +201,17 @@ const startGame = (difficult, level, wrapper, currentMatrix = null) => {
   const clickCell = (cell) => {
     cell.classList.remove('cross');
     cell.classList.toggle('fill');
+    if (!currentGame.currentTime) {
+      timerId = setInterval(getTime, 1000);
+    }
     const row = Math.floor(cell.id / difficult);
     const id = cell.id % difficult;
     currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
-      console.log('Вы выиграли!');
+      clearInterval(timerId);
+      console.log(
+        `Вы разгадали кроссворд за ${currentGame.currentTime}`,
+      );
     }
     console.log(currentGame.currentmatrix);
   };
@@ -240,10 +269,10 @@ const startGame = (difficult, level, wrapper, currentMatrix = null) => {
 
 startButton.addEventListener('click', (e) => {
   e.preventDefault();
-  startGame(optionsComplexity.value, optionsCrossword.value, container);
+  startGame(optionsComplexity.value, optionsCrossword.value, timerElement, container);
 });
 
-startGame(optionsComplexity.value, optionsCrossword.value, container);
+startGame(optionsComplexity.value, optionsCrossword.value, timerElement, container);
 
 // Создание элементов ячеек, навешивание слушателей
 
