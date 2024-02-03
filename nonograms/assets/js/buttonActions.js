@@ -1,20 +1,19 @@
-import { generateArrHints, initialMatrix, isEqual } from './functions.js';
+import {
+  fillCells, generateArrHints, initialMatrix, isEqual,
+} from './functions.js';
 import hints from './hints.js';
 import { getTime, startTime } from './timer.js';
+import {
+  difficultKey, levelKey, matrixKey, timeKey, timerInterval,
+} from './constants.js';
 
-const nickname = 'roisler';
 let timerId;
-const timerInterval = 20;
 
 // Сохранение кроссворда в local storage
 const saveGame = (game) => {
   const {
     difficult, level, currentmatrix, currentTime,
   } = game;
-  const difficultKey = `${nickname} difficult`;
-  const levelKey = `${nickname} level`;
-  const matrixKey = `${nickname} matrix`;
-  const timeKey = `${nickname} time`;
 
   localStorage.removeItem(difficultKey);
   localStorage.removeItem(levelKey);
@@ -43,7 +42,7 @@ const resetGame = (game, timer) => {
 };
 
 // Начало игры
-const startGame = (game, difficult, level, timerElement, wrapper, matrix = null) => {
+const startGame = (game, difficult, level, timerElement, wrapper, matrix = null, time = null) => {
   wrapper.replaceChildren();
 
   clearInterval(timerId);
@@ -51,8 +50,8 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null)
   const currentGame = game;
   const timer = timerElement;
 
-  currentGame.currentmatrix = initialMatrix(difficult);
-  currentGame.currentTime = 0;
+  currentGame.currentmatrix = matrix ?? initialMatrix(difficult);
+  currentGame.currentTime = time ?? 0;
   timer.textContent = getTime(currentGame);
 
   currentGame.difficult = difficult;
@@ -73,7 +72,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null)
     cell.classList.remove('cross');
     cell.classList.toggle('fill');
     console.log(currentGame.currentTime);
-    if (!currentGame.currentTime) {
+    if (!currentGame.currentTime || currentGame.currentTime === time) {
       timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
     }
     const row = Math.floor(cell.id / difficult);
@@ -131,7 +130,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null)
 
     // Формирование подсказок по колонкам
     const colHints = generateArrHints(hints, level, i - 1, difficult, 'col');
-    console.log(colHints);
     colHints.forEach((el) => {
       if (el !== 0) {
         const hint = document.createElement('div');
@@ -143,6 +141,9 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null)
 
     rowsContainer.append(row);
     collsContainer.append(col);
+  }
+  if (currentGame.currentTime) {
+    fillCells(currentGame.currentmatrix);
   }
 };
 

@@ -37,8 +37,7 @@ const isEqual = (arr, hint) => JSON.stringify(arr) === JSON.stringify(hint);
 // Закрашивание ячеек по сохраненной матрице
 const fillCells = (matrix) => {
   const flatMatrix = matrix.flat(Infinity);
-
-  const cells = document.querySelectorAll('cell');
+  const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => {
     if (flatMatrix[cell.id]) {
       cell.classList.add('fill');

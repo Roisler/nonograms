@@ -1,5 +1,8 @@
 import hints from './assets/js/hints.js';
 import { resetGame, saveGame, startGame } from './assets/js/buttonActions.js';
+import {
+  difficultKey, levelKey, matrixKey, timeKey,
+} from './assets/js/constants.js';
 
 const currentGame = {
   difficult: 5,
@@ -30,32 +33,6 @@ optionsComplexity.classList.add('options');
 
 const optionsCrossword = document.createElement('select');
 optionsCrossword.classList.add('options');
-
-// Создание контейнера и кнопок, навешивание на них слушателей
-const buttonContainer = document.createElement('div');
-buttonContainer.classList.add('buttons');
-
-const loadButton = document.createElement('button');
-loadButton.classList.add('button');
-loadButton.textContent = 'Continue last game';
-
-const resetButton = document.createElement('button');
-resetButton.classList.add('button');
-resetButton.textContent = 'Reset Game';
-
-resetButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  resetGame(currentGame, timerElement);
-});
-
-const saveButton = document.createElement('button');
-saveButton.classList.add('button');
-saveButton.textContent = 'Save Game';
-
-saveButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  saveGame(currentGame);
-});
 
 // Создание опций выбора сложности
 Object.keys(hints).forEach((key) => {
@@ -98,6 +75,46 @@ selectCrossword(5, optionsCrossword);
 
 optionsWrapper.append(optionsComplexity);
 optionsWrapper.append(optionsCrossword);
+
+// Создание контейнера и кнопок, навешивание на них слушателей
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('buttons');
+
+const loadButton = document.createElement('button');
+loadButton.classList.add('button');
+loadButton.textContent = 'Continue last game';
+
+loadButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  const difficult = Number(localStorage.getItem(difficultKey));
+  const level = localStorage.getItem(levelKey);
+  const matrix = JSON.parse(localStorage.getItem(matrixKey));
+  const time = Number(localStorage.getItem(timeKey));
+  optionsComplexity.value = difficult;
+  optionsCrossword.replaceChildren();
+  selectCrossword(difficult, optionsCrossword);
+  optionsCrossword.value = level;
+  startGame(currentGame, difficult, level, timerElement, container, matrix, time);
+});
+
+const resetButton = document.createElement('button');
+resetButton.classList.add('button');
+resetButton.textContent = 'Reset Game';
+
+resetButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  resetGame(currentGame, timerElement);
+});
+
+const saveButton = document.createElement('button');
+saveButton.classList.add('button');
+saveButton.textContent = 'Save Game';
+
+saveButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  saveGame(currentGame);
+});
+
 buttonContainer.append(loadButton, resetButton, saveButton);
 optionsWrapper.append(buttonContainer);
 
