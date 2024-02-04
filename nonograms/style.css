@@ -1,5 +1,7 @@
 :root {
   --border-color: #000;
+  --background-white: rgb(255, 255, 255);
+  --background-transparent: rgba(255, 255, 255, 0);
 }
 
 body {
@@ -29,14 +31,18 @@ body {
 }
 
 .timer {
-  display: block;
+  display: flex;
   width: 20%;
   height: 20%;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background-white);
 
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
   border: 2px solid var(--border-color);
   border-collapse: collapse;
+
+  font-size: 20px;
 }
 
 .options-wrapper {
@@ -72,7 +78,7 @@ body {
   width: 80%;
   height: 20%;
 
-  background-color: rgb(40, 122, 122);
+  background-color: var(--background-white);
 }
 
 .cols-5 {
@@ -97,7 +103,7 @@ body {
   width: 20%;
   height: 80%;
 
-  background-color: antiquewhite;
+  background-color: var(--background-white);
 }
 
 .rows-5 {
@@ -149,10 +155,6 @@ body {
   border-top: 2px solid var(--border-color);
 }
 
-.col>p {
-  padding: 0;
-}
-
 .row {
   display: flex;
   flex-direction: row;
@@ -170,33 +172,22 @@ body {
   height: 100%;
 }
 
-.cell {
-  background: #fff;
-}
-
 .fill {
-  background-color: #000;
+  background-color: var(--border-color);
 }
 
 .cross {
   background: 
     linear-gradient(to top left,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) calc(50% - 2px),
-        rgb(0, 0, 0) 50%,
-        rgba(255, 255, 255, 0) calc(50% + 2px),
-        rgba(255, 255, 255, 0) 100%),
+      var(--background-transparent) 0%,
+      var(--background-transparent) calc(50% - 2px),
+      var(--border-color) 50%,
+      var(--background-transparent) calc(50% + 2px),
+      var(--background-transparent) 100%),
     linear-gradient(to top right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) calc(50% - 2px),
-        rgba(0,0,0,1) 50%,
-        rgba(255, 255, 255, 0) calc(50% + 2px),
-        rgba(255, 255, 255, 0) 100%);
+      var(--background-transparent) 0%,
+      var(--background-transparent) calc(50% - 2px),
+      var(--border-color) 50%,
+      var(--background-transparent) calc(50% + 2px),
+      var(--background-transparent) 100%);
 }
-
-p {
-  padding-right: 10px;
-  margin: 0;
-
-  font-size: 18px;
- }
