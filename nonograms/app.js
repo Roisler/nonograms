@@ -14,6 +14,27 @@ const currentGame = {
 const body = document.querySelector('body');
 body.classList.add('page');
 
+// Создание header
+const header = document.createElement('header');
+header.classList.add('header');
+
+const headerContent = document.createElement('div');
+headerContent.classList.add('header-content');
+
+const logoElement = document.createElement('p');
+logoElement.classList.add('logo');
+logoElement.textContent = ct.logoText;
+
+const score = document.createElement('div');
+score.classList.add('score');
+score.textContent = ct.scoreText;
+
+const themeSelector = document.createElement('div');
+themeSelector.classList.add('theme', 'light');
+
+headerContent.append(logoElement, score, themeSelector);
+header.append(headerContent);
+
 // Создание основного контейнера с ячейками
 const container = document.createElement('div');
 container.classList.add('container');
@@ -24,7 +45,7 @@ timerElement.classList.add('timer');
 timerElement.textContent = ct.initialTimerCount;
 
 // Создание контейнера и вариантов кроссворда
-const optionsWrapper = document.createElement('fieldset');
+const optionsWrapper = document.createElement('div');
 optionsWrapper.classList.add('options-wrapper');
 
 const optionsComplexity = document.createElement('select');
@@ -136,8 +157,16 @@ randomGameButton.addEventListener('click', (e) => {
 buttonContainer.append(loadButton, resetButton, saveButton, randomGameButton);
 optionsWrapper.append(buttonContainer);
 
+const modal = document.createElement('div');
+modal.classList.add('modal');
+const modalContent = document.createElement('div');
+modalContent.classList.add('modal-content');
+modal.append(modalContent);
+
+header.append(optionsWrapper);
 body.prepend(container);
-body.prepend(optionsWrapper);
+body.prepend(header);
+body.append(modal);
 
 startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
 

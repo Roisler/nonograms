@@ -1,5 +1,4 @@
 import { tableKey } from './constants.js';
-import hints from './hints.js';
 import { getTime } from './timer.js';
 
 // Генерирование подсказок
@@ -86,8 +85,6 @@ const getRandom = (arr, previous) => {
 
   return { difficult, level };
 };
-
-getRandom(hints);
 
 export {
   generateArrHints, initialMatrix, isEqual, fillCells, setWinTable, getRandom,

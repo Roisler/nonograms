@@ -1,11 +1,11 @@
 :root {
   --border-color: #000;
+  --background-light: rgba(202, 202, 202, 0.541);
   --background-white: rgb(255, 255, 255);
   --background-transparent: rgba(255, 255, 255, 0);
 }
 
 body {
-  padding: 0;
   margin: 0;
 }
 
@@ -18,23 +18,54 @@ body {
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-  align-items: center;
-  justify-content: center;
+  gap: 20px;
+
+  padding: 0 30px 30px 30px;
+
+  background-color: var(--background-light);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.theme {
+  width: 50px;
+  height: 50px;
+}
+
+.light {
+  background-image: url('./assets/svg/light.svg');
+}
+
+.dark {
+  background-image: url('./assets/svg/dark.svg');
 }
 
 .container {
   display: flex;
   width: 500px;
-  height: 500px;
-
+  height: auto;
+  aspect-ratio: 1 / 1;
   flex-wrap: wrap;
+
+  align-self: center;
+  justify-self: center;
 }
 
 .timer {
   display: flex;
   width: 20%;
   height: 20%;
-  background-color: var(--background-white);
 
   justify-content: center;
   align-items: center;
@@ -46,14 +77,16 @@ body {
 }
 
 .options-wrapper {
-  width: 500px;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+
+  justify-content: space-around;
 }
 
 .options {
-  width: 20%;
+  width: 15%;
+  background-color: var(--background-light);
 }
 
 .buttons {
@@ -63,6 +96,10 @@ body {
   gap: 20px;
 
   justify-content: center;
+}
+
+.button {
+  width: 20%;
 }
 
 .col,
@@ -77,8 +114,6 @@ body {
   grid-template-rows: 1fr;
   width: 80%;
   height: 20%;
-
-  background-color: var(--background-white);
 }
 
 .cols-5 {
@@ -102,8 +137,6 @@ body {
   grid-template-columns: 1fr;
   width: 20%;
   height: 80%;
-
-  background-color: var(--background-white);
 }
 
 .rows-5 {
@@ -161,6 +194,24 @@ body {
   align-items: center;
   justify-content: center;
   border-left: 2px solid var(--border-color);
+}
+
+.modal {
+  position: absolute;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #aaaaaa75;
+}
+
+.modal-content {
+
+  width: 100px;
+  height: 100px;
 }
 
 .hint {
