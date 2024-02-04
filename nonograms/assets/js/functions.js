@@ -1,5 +1,6 @@
 import { tableKey } from './constants.js';
 import hints from './hints.js';
+import { getTime } from './timer.js';
 
 // Генерирование подсказок
 const generateArrHints = (arr, lvl, index, difficult, type) => {
@@ -56,16 +57,17 @@ const getWinTable = () => {
 
 // Добавление таблицы результатов
 const setWinTable = (result) => {
-  console.log(result);
-  const date = new Date();
-
+  const { difficult, level, time } = result;
   const table = getWinTable() ?? [];
-  const hours = date.getHours().toString().padStart(2, 0);
-  const minutes = date.getMinutes().toString().padStart(2, 0);
-  console.log(minutes);
-  const timeString = `${hours}:${minutes}`;
-  table.push({ [timeString]: result });
-  table.sort();
+  if (table.length >= 5) {
+    table.pop();
+  }
+  const timeString = getTime(time);
+  console.log(timeString);
+  table.push([timeString, { difficult, level, time: timeString }]);
+
+  table.sort((a, b) => Number(a[0].split(':')[1]) - Number(b[0].split(':')[1]));
+
   localStorage.setItem(tableKey, JSON.stringify(table));
 };
 

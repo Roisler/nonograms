@@ -33,7 +33,7 @@ const resetGame = (game, timer) => {
   currentGame.currentTime = 0;
   currentGame.currentmatrix = initialMatrix(currentGame.difficult);
   const timerElement = timer;
-  timerElement.textContent = getTime(currentGame);
+  timerElement.textContent = getTime(currentGame.currentTime);
   const cells = document.querySelectorAll('.cell');
   cells.forEach((e) => {
     e.classList.remove('fill');
@@ -52,7 +52,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
 
   currentGame.currentmatrix = matrix ?? initialMatrix(difficult);
   currentGame.currentTime = time ?? 0;
-  timer.textContent = getTime(currentGame);
+  timer.textContent = getTime(currentGame.currentTime);
 
   currentGame.difficult = difficult;
   currentGame.level = level;
@@ -82,9 +82,11 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       // const saveButton = document.querySelector('.button-save');
       // saveButton.setAttribute('disabled', true);
       // saveButton.setAttribute('title', 'Я думаю, что не стоит сохранять разгаданный кроссворд');
-      setWinTable({ level, difficult, time: currentGame.currentTime });
+      setWinTable({
+        level, difficult, time: currentGame.currentTime,
+      });
       console.log(
-        `Вы разгадали кроссворд за ${getTime(currentGame)}`,
+        `Вы разгадали кроссворд за ${getTime(currentGame.currentTime)}`,
       );
     }
   };

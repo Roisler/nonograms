@@ -85,15 +85,20 @@ loadButton.textContent = ct.loadGameText;
 
 loadButton.addEventListener('click', (e) => {
   e.preventDefault();
+
   const difficult = Number(localStorage.getItem(ct.difficultKey));
   const level = localStorage.getItem(ct.levelKey);
   const matrix = JSON.parse(localStorage.getItem(ct.matrixKey));
   const time = Number(localStorage.getItem(ct.timeKey));
-  optionsComplexity.value = difficult;
-  optionsCrossword.replaceChildren();
-  selectCrossword(difficult, optionsCrossword);
-  optionsCrossword.value = level;
-  startGame(currentGame, difficult, level, timerElement, container, matrix, time);
+  if (!difficult && !level && !matrix && !time) {
+    console.log('У вас нет сохраненных игр!');
+  } else {
+    optionsComplexity.value = difficult;
+    optionsCrossword.replaceChildren();
+    selectCrossword(difficult, optionsCrossword);
+    optionsCrossword.value = level;
+    startGame(currentGame, difficult, level, timerElement, container, matrix, time);
+  }
 });
 
 const resetButton = document.createElement('button');

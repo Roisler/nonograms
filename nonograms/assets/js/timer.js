@@ -1,6 +1,5 @@
 // Функция - секундомер
-const getTime = (game) => {
-  const { currentTime } = game;
+const getTime = (currentTime) => {
   const minutes = Math.floor(currentTime / 60000);
   const seconds = Math.floor((currentTime % 60000) / 1000);
 
@@ -14,7 +13,7 @@ const startTime = (game, timerElement, timerInterval) => {
   так как в функции, выполняемой при клике, currentTime проверяется на ненулевое значение */
   currentGame.currentTime += timerInterval;
 
-  const time = getTime(currentGame);
+  const time = getTime(game.currentTime);
   timer.textContent = time;
 };
 
