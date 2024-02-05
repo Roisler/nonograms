@@ -4,7 +4,7 @@ import {
 } from './assets/js/buttonActions.js';
 import * as ct from './assets/js/constants.js';
 import {
-  getRandom, changeTheme, getWinTable, fillCells,
+  getRandom, changeTheme, getWinTable, fillCells, showModal,
 } from './assets/js/functions.js';
 
 const currentGame = {
@@ -17,6 +17,10 @@ const currentGame = {
 // Создание и поиск элементов
 const body = document.querySelector('body');
 body.classList.add('page', 'light');
+
+// Создание модального окна
+const modal = document.createElement('div');
+modal.classList.add('modal');
 
 // Создание header
 const header = document.createElement('header');
@@ -33,7 +37,8 @@ score.classList.add('score');
 score.textContent = ct.scoreText;
 score.addEventListener('click', (e) => {
   e.preventDefault();
-  getWinTable();
+  const table = getWinTable();
+  showModal(table, 'score', modal);
 });
 
 const themeSelector = document.createElement('div');
@@ -111,14 +116,6 @@ selectCrossword(5, optionsCrossword);
 
 optionsWrapper.append(optionsComplexity);
 optionsWrapper.append(optionsCrossword);
-
-// Создание модального окна
-const modal = document.createElement('div');
-modal.classList.add('modal');
-const modalContent = document.createElement('div');
-modalContent.classList.add('modal-content');
-modal.append(modalContent);
-modal.addEventListener('contextmenu', (e) => e.preventDefault());
 
 // Создание контейнера и кнопок, навешивание на них слушателей
 const buttonContainer = document.createElement('div');

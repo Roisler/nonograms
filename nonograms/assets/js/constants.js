@@ -15,4 +15,4 @@ export const randomGameText = 'Random Game';
 export const solutionGameText = 'Solution';
 
 export const logoText = 'Nonogram logo';
-export const scoreText = 'Score';
+export const scoreText = 'Scores';

@@ -70,6 +70,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   // Элемент-костыль для блокировки действий по ячейкам
   const blockCells = document.createElement('div');
   blockCells.classList.add('block-cells');
+  blockCells.addEventListener('contextmenu', (e) => e.preventDefault());
 
   wrapper.append(timer, collsContainer, rowsContainer, cellsContainer, blockCells);
 
