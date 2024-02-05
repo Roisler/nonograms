@@ -4,12 +4,14 @@ import {
 } from './assets/js/buttonActions.js';
 import * as ct from './assets/js/constants.js';
 import {
-  getRandom, changeTheme, getWinTable, fillCells, showModal,
+  getRandom, changeTheme, getWinTable, fillCells,
 } from './assets/js/functions.js';
+
+import { showModal } from './assets/js/modal.js';
 
 const currentGame = {
   difficult: 5,
-  level: 'key',
+  level: 'camel',
   currentmatrix: [],
   currentTime: 0,
 };

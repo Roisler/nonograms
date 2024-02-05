@@ -57,7 +57,6 @@ const getWinTable = () => {
     console.log('Вы еще не сыграли ни одной игры!');
   } else {
     table.sort((a, b) => Number(a.time.split(':')[1]) - Number(b.time.split(':')[1]));
-    console.log(table);
     return table;
   }
   return table;
@@ -105,63 +104,6 @@ const changeTheme = (theme, mainElement, themeChangeElement) => {
 
 } */
 
-const closeModal = (modal) => {
-  modal.classList.remove('show');
-};
-
-const showModal = (data, type, modal) => {
-  const mapping = {
-    score: 'Scores',
-    win: 'You win',
-    new: 'Start new game',
-  };
-
-  modal.replaceChildren();
-  modal.classList.add('show');
-  const modalContent = document.createElement('div');
-  modalContent.classList.add('modal-content');
-
-  const closeModalElement = document.createElement('div');
-  closeModalElement.classList.add('modal-close');
-  closeModalElement.addEventListener('click', () => closeModal(modal));
-
-  modalContent.append(closeModalElement);
-  modal.append(modalContent);
-
-  const header = document.createElement('div');
-  header.classList.add('modal-header');
-  header.textContent = mapping[type];
-  const modalData = document.createElement('div');
-  modalData.classList.add('modal-data');
-
-  const scores = document.createElement('table');
-  const scoresTitle = document.createElement('tr');
-  const titles = ['N', 'Difficult', 'Level', 'Time'];
-  titles.forEach((title) => {
-    const th = document.createElement('th');
-    th.textContent = title;
-    scoresTitle.append(th);
-  });
-  scores.append(scoresTitle);
-  modalData.append(scores);
-
-  data.forEach((el, i) => {
-    const line = document.createElement('tr');
-    const keys = Object.keys(el);
-    const index = document.createElement('td');
-    index.textContent = i + 1;
-    line.append(index);
-    keys.forEach((key) => {
-      const lineItem = document.createElement('td');
-      lineItem.textContent = el[key];
-      line.append(lineItem);
-    });
-    scores.append(line);
-  });
-
-  modalContent.append(header, modalData);
-};
-
 export {
   generateArrHints,
   initialMatrix,
@@ -171,5 +113,4 @@ export {
   getRandom,
   changeTheme,
   getWinTable,
-  showModal,
 };

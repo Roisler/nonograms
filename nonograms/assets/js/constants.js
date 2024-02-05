@@ -16,3 +16,5 @@ export const solutionGameText = 'Solution';
 
 export const logoText = 'Nonogram logo';
 export const scoreText = 'Scores';
+
+export const winText = 'Great! You have solved the nonogram in ';

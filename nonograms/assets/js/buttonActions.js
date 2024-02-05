@@ -1,6 +1,7 @@
 import {
   fillCells, generateArrHints, initialMatrix, isEqual, setWinTable,
 } from './functions.js';
+import { showModal } from './modal.js';
 import hints from './hints.js';
 import { getTime, startTime } from './timer.js';
 import {
@@ -21,7 +22,6 @@ const saveGame = (game) => {
 
   localStorage.setItem(difficultKey, difficult.toString());
   localStorage.setItem(levelKey, level);
-  console.log(currentmatrix);
   localStorage.setItem(matrixKey, JSON.stringify(currentmatrix));
   localStorage.setItem(timeKey, currentTime.toString());
 };
@@ -70,7 +70,15 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   // Элемент-костыль для блокировки действий по ячейкам
   const blockCells = document.createElement('div');
   blockCells.classList.add('block-cells');
-  blockCells.addEventListener('contextmenu', (e) => e.preventDefault());
+  const modal = document.querySelector('.modal');
+  blockCells.addEventListener('click', (e) => {
+    e.preventDefault();
+    showModal(currentGame, 'error', modal);
+  });
+  blockCells.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    showModal(currentGame, 'error', modal);
+  });
 
   wrapper.append(timer, collsContainer, rowsContainer, cellsContainer, blockCells);
 
@@ -90,9 +98,8 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       setWinTable({
         level, difficult, time: currentGame.currentTime,
       });
-      console.log(
-        `Вы разгадали кроссворд за ${getTime(currentGame.currentTime)}`,
-      );
+      blockCells.classList.add('blocked');
+      showModal(currentGame, 'win', modal);
     }
   };
 
