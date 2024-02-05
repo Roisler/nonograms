@@ -21,9 +21,8 @@ header.classList.add('header');
 const headerContent = document.createElement('div');
 headerContent.classList.add('header-content');
 
-const logoElement = document.createElement('p');
+const logoElement = document.createElement('div');
 logoElement.classList.add('logo');
-logoElement.textContent = ct.logoText;
 
 const score = document.createElement('div');
 score.classList.add('score');

@@ -4,7 +4,6 @@
   --border-color: #000;
   --background-light: rgb(238, 238, 238);
   --background-dark: rgba(0, 0, 0, 0.603);
-  --background-white: rgb(255, 255, 255);
   --border-bold: 3px solid;
 }
 
@@ -79,7 +78,7 @@ body {
 
 .container {
   display: flex;
-  width: 450px;
+  width: 470px;
   aspect-ratio: 1 / 1;
   flex-wrap: wrap;
 
@@ -308,12 +307,12 @@ body {
 }
 
 .col .hint {
-  height: 22%;
+  height: 16.6%;
 }
 
 .row .hint {
   justify-content: flex-end;
-  width: 20%;
+  width: 16.6%;
 }
 
 .fill {
