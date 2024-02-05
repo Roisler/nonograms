@@ -25,7 +25,13 @@ const showScores = (data, modalContent, modalData) => {
     line.append(index);
     keys.forEach((key) => {
       const lineItem = document.createElement('td');
-      lineItem.textContent = el[key];
+      const levelMapping = {
+        5: 'easy',
+        10: 'medium',
+        15: 'hard',
+      };
+
+      lineItem.textContent = levelMapping[el[key]] ?? el[key];
       line.append(lineItem);
     });
     scores.append(line);

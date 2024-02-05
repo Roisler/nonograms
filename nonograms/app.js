@@ -81,13 +81,19 @@ optionsComplexity.classList.add('options');
 const optionsCrossword = document.createElement('select');
 optionsCrossword.classList.add('options');
 
+const levelMapping = {
+  5: 'easy',
+  10: 'medium',
+  15: 'hard',
+};
+
 // Создание опций выбора сложности
 Object.keys(hints).forEach((key) => {
   const option = document.createElement('option');
   option.classList.add('option');
   option.setAttribute('value', key);
 
-  option.textContent = `${key}x${key}`;
+  option.textContent = levelMapping[key];
   optionsComplexity.append(option);
 });
 
