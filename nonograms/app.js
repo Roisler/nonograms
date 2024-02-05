@@ -43,7 +43,7 @@ score.addEventListener('click', (e) => {
   if (table) {
     showModal(table, 'score', modal);
   } else {
-    showModal(table, 'errorSave', modal);
+    showModal(table, 'errorScore', modal);
   }
 });
 
@@ -139,7 +139,7 @@ loadButton.addEventListener('click', (e) => {
   const matrix = JSON.parse(localStorage.getItem(ct.matrixKey));
   const time = Number(localStorage.getItem(ct.timeKey));
   if (!difficult && !level && !matrix && !time) {
-    console.log('У вас нет сохраненных игр!');
+    showModal(currentGame, 'errorSave', modal);
   } else {
     optionsComplexity.value = difficult;
     optionsCrossword.replaceChildren();
@@ -202,26 +202,3 @@ header.append(optionsWrapper, buttonContainer);
 body.prepend(header, container, buttonSolution, modal);
 
 startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
-
-/* const ctx = canvas.getContext('2d');
-
-canvas.width = cellsContainer.offsetWidth;
-canvas.height = cellsContainer.offsetHeight; */
-
-/* const cells = document.querySelectorAll('.cell');
-cells.forEach((cell) => {
-  cell.addEventListener('click', (e) => {
-    const elementHeight = e.target.offsetHeight;
-    const elementWidth = e.target.offsetWidth;
-    const row = Math.ceil(e.target.id / 5);
-    const cell = e.target.id % 5 || 5;
-
-    ctx.beginPath();
-    ctx.moveTo(elementWidth * (cell - 1), elementHeight * (row - 1));
-    ctx.moveTo(elementWidth * cell, elementHeight * (row - 1));
-    ctx.lineTo(elementWidth * cell, elementHeight * row);
-    ctx.lineTo(elementWidth * (cell - 1), elementHeight * row);
-    ctx.lineTo(elementWidth * (cell - 1), elementHeight * (row - 1))
-    ctx.fill();
-  })
-}) */

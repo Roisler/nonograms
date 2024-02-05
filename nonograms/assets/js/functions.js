@@ -43,8 +43,10 @@ const fillCells = (matrix) => {
   const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => {
     if (flatMatrix[cell.id]) {
+      cell.classList.remove('cross');
       cell.classList.add('fill');
     } else {
+      cell.classList.remove('cross');
       cell.classList.remove('fill');
     }
   });

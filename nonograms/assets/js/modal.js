@@ -1,3 +1,4 @@
+import { errorSound } from './audio.js';
 import { winText } from './constants.js';
 
 const closeModal = (modal) => {
@@ -47,7 +48,8 @@ const showModal = (data, type, modal) => {
     score: 'Scores',
     win: 'You win',
     error: 'Start a new game or reset current game',
-    errorSave: 'You have no games won',
+    errorScore: 'You have no games won',
+    errorSave: 'You have no saved games!',
   };
 
   modal.replaceChildren();
@@ -77,6 +79,8 @@ const showModal = (data, type, modal) => {
 
   if (mappingShow[type]) {
     mappingShow[type](data, modalContent, modalData);
+  } else {
+    errorSound.play();
   }
 };
 

@@ -7,6 +7,7 @@ import { getTime, startTime } from './timer.js';
 import {
   difficultKey, levelKey, matrixKey, timeKey, timerInterval,
 } from './constants.js';
+import * as sound from './audio.js';
 
 let timerId;
 
@@ -90,8 +91,14 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   // Действие при клике на ячейку
 
   const clickCell = (cell) => {
+    if (cell.classList.contains('fill')) {
+      cell.classList.remove('fill');
+      sound.emptySound.play();
+    } else {
+      cell.classList.add('fill');
+      sound.clickSound.play();
+    }
     cell.classList.remove('cross');
-    cell.classList.toggle('fill');
     if (!currentGame.currentTime || currentGame.currentTime === time) {
       timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
     }
@@ -100,6 +107,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
+      sound.winSound.play();
       setWinTable({
         level, difficult, time: currentGame.currentTime,
       });
@@ -108,7 +116,38 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     }
   };
 
-  for (let i = 0; i < difficult ** 2; i += 1) {
+  let index = 0;
+  for (let i = 0; i < difficult; i += 1) {
+    const cellRow = document.createElement('div');
+    cellRow.classList.add(`row-cells-${difficult}`);
+    cellRow.classList.add('row-cells');
+    for (let j = 0; j < difficult; j += 1) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.setAttribute('id', index);
+      index += 1;
+      cell.addEventListener('click', (e) => {
+        clickCell(e.target);
+      });
+      // eslint-disable-next-line no-loop-func
+      cell.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (e.target.classList.contains('cross')) {
+          sound.emptySound.play();
+        } else {
+          sound.crossSound.play();
+        }
+        if (!currentGame.currentTime) {
+          timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
+        }
+        e.target.classList.remove('fill');
+        e.target.classList.toggle('cross');
+      });
+      cellRow.append(cell);
+    }
+    cellsContainer.append(cellRow);
+
+  /* for (let i = 0; i < difficult ** 2; i += 1) {
     const cell = document.createElement('div');
     cell.classList.add('cell');
     cell.setAttribute('id', i);
@@ -124,7 +163,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       }
       e.target.classList.remove('fill');
       e.target.classList.toggle('cross');
-    });
+    }); */
   }
 
   rowsContainer.classList.add(`rows-${difficult}`);
