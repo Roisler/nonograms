@@ -182,7 +182,7 @@ modalContent.classList.add('modal-content');
 modal.append(modalContent);
 
 header.append(optionsWrapper, buttonContainer);
-body.prepend(header, container, buttonSolution, modal);
+body.prepend(header, container, modal);
 
 startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
 
