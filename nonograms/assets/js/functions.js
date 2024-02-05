@@ -51,21 +51,25 @@ const fillCells = (matrix) => {
 // Получение таблицы результатов
 const getWinTable = () => {
   const table = JSON.parse(localStorage.getItem(tableKey));
+  if (!table) {
+    console.log('Вы еще не сыграли ни одной игры!');
+  } else {
+    table.sort((a, b) => Number(a.time.split(':')[1]) - Number(b.time.split(':')[1]));
+    console.log(table);
+    return table;
+  }
   return table;
 };
 
 // Добавление таблицы результатов
 const setWinTable = (result) => {
   const { difficult, level, time } = result;
-  const table = getWinTable() ?? [];
+  const table = JSON.parse(localStorage.getItem(tableKey)) ?? [];
   if (table.length >= 5) {
-    table.pop();
+    table.shift();
   }
   const timeString = getTime(time);
-  console.log(timeString);
-  table.push([timeString, { difficult, level, time: timeString }]);
-
-  table.sort((a, b) => Number(a[0].split(':')[1]) - Number(b[0].split(':')[1]));
+  table.push({ difficult, level, time: timeString });
 
   localStorage.setItem(tableKey, JSON.stringify(table));
 };
@@ -86,6 +90,22 @@ const getRandom = (arr, previous) => {
   return { difficult, level };
 };
 
+const changeTheme = (theme, mainElement, themeChangeElement) => {
+  themeChangeElement.classList.remove('light');
+  themeChangeElement.classList.remove('dark');
+  themeChangeElement.classList.add(theme);
+  mainElement.classList.remove('light');
+  mainElement.classList.remove('dark');
+  mainElement.classList.add(theme);
+};
+
 export {
-  generateArrHints, initialMatrix, isEqual, fillCells, setWinTable, getRandom,
+  generateArrHints,
+  initialMatrix,
+  isEqual,
+  fillCells,
+  setWinTable,
+  getRandom,
+  changeTheme,
+  getWinTable,
 };

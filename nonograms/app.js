@@ -1,7 +1,7 @@
 import hints from './assets/js/hints.js';
 import { resetGame, saveGame, startGame } from './assets/js/buttonActions.js';
 import * as ct from './assets/js/constants.js';
-import { getRandom } from './assets/js/functions.js';
+import { getRandom, changeTheme, getWinTable } from './assets/js/functions.js';
 
 const currentGame = {
   difficult: 5,
@@ -12,7 +12,7 @@ const currentGame = {
 
 // Создание и поиск элементов
 const body = document.querySelector('body');
-body.classList.add('page');
+body.classList.add('page', 'light');
 
 // Создание header
 const header = document.createElement('header');
@@ -28,9 +28,22 @@ logoElement.textContent = ct.logoText;
 const score = document.createElement('div');
 score.classList.add('score');
 score.textContent = ct.scoreText;
+score.addEventListener('click', (e) => {
+  e.preventDefault();
+  getWinTable();
+});
 
 const themeSelector = document.createElement('div');
 themeSelector.classList.add('theme', 'light');
+
+themeSelector.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (e.target.classList.contains('light')) {
+    changeTheme('dark', body, e.target);
+  } else {
+    changeTheme('light', body, e.target);
+  }
+});
 
 headerContent.append(logoElement, score, themeSelector);
 header.append(headerContent);
@@ -101,7 +114,7 @@ const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('buttons');
 
 const loadButton = document.createElement('button');
-loadButton.classList.add('button', 'button-load');
+loadButton.classList.add('button-load', 'button');
 loadButton.textContent = ct.loadGameText;
 
 loadButton.addEventListener('click', (e) => {
@@ -123,7 +136,7 @@ loadButton.addEventListener('click', (e) => {
 });
 
 const resetButton = document.createElement('button');
-resetButton.classList.add('button', 'button-reset');
+resetButton.classList.add('button-reset', 'button');
 resetButton.textContent = ct.resetGameText;
 
 resetButton.addEventListener('click', (e) => {
@@ -132,7 +145,7 @@ resetButton.addEventListener('click', (e) => {
 });
 
 const saveButton = document.createElement('button');
-saveButton.classList.add('button', 'button-save');
+saveButton.classList.add('button-save', 'button');
 saveButton.textContent = ct.saveGameText;
 
 saveButton.addEventListener('click', (e) => {
@@ -141,7 +154,7 @@ saveButton.addEventListener('click', (e) => {
 });
 
 const randomGameButton = document.createElement('button');
-randomGameButton.classList.add('button', 'button-random');
+randomGameButton.classList.add('button-random', 'button');
 randomGameButton.textContent = ct.randomGameText;
 
 randomGameButton.addEventListener('click', (e) => {
@@ -155,18 +168,21 @@ randomGameButton.addEventListener('click', (e) => {
 });
 
 buttonContainer.append(loadButton, resetButton, saveButton, randomGameButton);
-optionsWrapper.append(buttonContainer);
 
+// Создание кнопки, решающей кроссворд
+const buttonSolution = document.createElement('button');
+buttonSolution.classList.add('button-solution', 'button');
+buttonSolution.textContent = ct.solutionGameText;
+
+// Создание модального окна
 const modal = document.createElement('div');
 modal.classList.add('modal');
 const modalContent = document.createElement('div');
 modalContent.classList.add('modal-content');
 modal.append(modalContent);
 
-header.append(optionsWrapper);
-body.prepend(container);
-body.prepend(header);
-body.append(modal);
+header.append(optionsWrapper, buttonContainer);
+body.prepend(header, container, buttonSolution, modal);
 
 startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
 

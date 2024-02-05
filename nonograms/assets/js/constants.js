@@ -12,6 +12,7 @@ export const loadGameText = 'Continue last game';
 export const saveGameText = 'Save Game';
 export const resetGameText = 'Reset Game';
 export const randomGameText = 'Random Game';
+export const solutionGameText = 'Solution';
 
 export const logoText = 'Nonogram';
 export const scoreText = 'Score';

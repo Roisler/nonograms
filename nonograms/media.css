@@ -1,0 +1,31 @@
+@media (max-width: 500px) {
+  .page {
+    padding: 0 5px 5px 5px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  .button-solution {
+    width: 30%;
+  }
+
+  .container {
+    width: 350px;
+  }
+
+  .options:nth-child(2) {
+    width: 50%;
+  }
+
+  .header {
+    gap: 5px;
+  }
+}
