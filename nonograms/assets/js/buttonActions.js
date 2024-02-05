@@ -108,6 +108,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
       sound.winSound.play();
+      saveButton.disabled = true;
       setWinTable({
         level, difficult, time: currentGame.currentTime,
       });
