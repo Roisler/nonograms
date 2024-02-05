@@ -1,7 +1,11 @@
 import hints from './assets/js/hints.js';
-import { resetGame, saveGame, startGame } from './assets/js/buttonActions.js';
+import {
+  resetGame, saveGame, startGame, stopTime,
+} from './assets/js/buttonActions.js';
 import * as ct from './assets/js/constants.js';
-import { getRandom, changeTheme, getWinTable } from './assets/js/functions.js';
+import {
+  getRandom, changeTheme, getWinTable, fillCells,
+} from './assets/js/functions.js';
 
 const currentGame = {
   difficult: 5,
@@ -172,6 +176,12 @@ buttonContainer.append(loadButton, resetButton, saveButton, randomGameButton);
 const buttonSolution = document.createElement('button');
 buttonSolution.classList.add('button-solution', 'button');
 buttonSolution.textContent = ct.solutionGameText;
+buttonSolution.addEventListener('click', (e) => {
+  e.preventDefault();
+  const { difficult, level } = currentGame;
+  fillCells(hints[difficult][level]);
+  stopTime();
+});
 
 // Создание модального окна
 const modal = document.createElement('div');
@@ -181,7 +191,7 @@ modalContent.classList.add('modal-content');
 modal.append(modalContent);
 
 header.append(optionsWrapper, buttonContainer);
-body.prepend(header, container, modal);
+body.prepend(header, container, buttonSolution, modal);
 
 startGame(currentGame, optionsComplexity.value, optionsCrossword.value, timerElement, container);
 

@@ -151,4 +151,10 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   }
 };
 
-export { resetGame, saveGame, startGame };
+const stopTime = () => {
+  clearInterval(timerId);
+};
+
+export {
+  resetGame, saveGame, startGame, stopTime,
+};

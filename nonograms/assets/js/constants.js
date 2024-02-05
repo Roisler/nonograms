@@ -14,5 +14,5 @@ export const resetGameText = 'Reset Game';
 export const randomGameText = 'Random Game';
 export const solutionGameText = 'Solution';
 
-export const logoText = 'Nonogram';
+export const logoText = 'Nonogram logo';
 export const scoreText = 'Score';

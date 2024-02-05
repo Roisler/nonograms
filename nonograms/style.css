@@ -7,11 +7,6 @@
   --border-bold: 3px solid;
 }
 
-body {
-  margin: auto;
-  overflow: hidden;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -20,10 +15,11 @@ body {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  gap: 15px;
+  gap: 12px;
   justify-content: center;
   padding: 0 30px 30px 30px;
-
+  margin: auto;
+  overflow: hidden;
   font-family: 'Protest Guerrilla', sans-serif;
 }
 
@@ -55,7 +51,13 @@ body {
 }
 
 .logo {
-  margin: 0;
+  width: 30px;
+  height: 30px;
+  background: center / contain no-repeat url('./favicon32.png');
+}
+
+.dark .logo {
+  background-image: url('./favicon32-light.png');
 }
 
 .score {
@@ -63,8 +65,8 @@ body {
 }
 
 .theme {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
 
@@ -78,7 +80,7 @@ body {
 
 .container {
   display: flex;
-  width: 470px;
+  width: 450px;
   aspect-ratio: 1 / 1;
   flex-wrap: wrap;
 
@@ -148,7 +150,7 @@ body {
   border: solid 1px var(--border-color);
   border-radius: 10px;
   width: 20%;
-  background: inherit;
+  background: transparent;
   color: inherit;
   font-family: 'Protest Guerrilla', sans-serif;
   font-size: 0.8em;
@@ -321,6 +323,10 @@ body {
 
 .cross {
   background: center / contain no-repeat url('./assets/png/cross.png');
+}
+
+.dark .cross {
+  background: center / contain no-repeat url('./assets/png/cross-light.png');
 }
 
 /*.cross {

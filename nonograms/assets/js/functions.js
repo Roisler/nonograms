@@ -44,6 +44,8 @@ const fillCells = (matrix) => {
   cells.forEach((cell) => {
     if (flatMatrix[cell.id]) {
       cell.classList.add('fill');
+    } else {
+      cell.classList.remove('fill');
     }
   });
 };
