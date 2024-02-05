@@ -101,6 +101,10 @@ const changeTheme = (theme, mainElement, themeChangeElement) => {
   mainElement.classList.add(theme);
 };
 
+/* const updateStatusButton = (buttons) => {
+
+} */
+
 export {
   generateArrHints,
   initialMatrix,

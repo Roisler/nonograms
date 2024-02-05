@@ -35,6 +35,9 @@ const resetGame = (game, timer) => {
   const timerElement = timer;
   timerElement.textContent = getTime(currentGame.currentTime);
   const cells = document.querySelectorAll('.cell');
+
+  const blockCells = document.querySelector('.block-cells');
+  blockCells.classList.remove('blocked');
   cells.forEach((e) => {
     e.classList.remove('fill');
     e.classList.remove('cross');
@@ -64,7 +67,11 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   const cellsContainer = document.createElement('div');
   cellsContainer.classList.add('cells');
 
-  wrapper.append(timer, collsContainer, rowsContainer, cellsContainer);
+  // Элемент-костыль для блокировки действий по ячейкам
+  const blockCells = document.createElement('div');
+  blockCells.classList.add('block-cells');
+
+  wrapper.append(timer, collsContainer, rowsContainer, cellsContainer, blockCells);
 
   // Действие при клике на ячейку
 
@@ -79,9 +86,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
-      // const saveButton = document.querySelector('.button-save');
-      // saveButton.setAttribute('disabled', true);
-      // saveButton.setAttribute('title', 'Я думаю, что не стоит сохранять разгаданный кроссворд');
       setWinTable({
         level, difficult, time: currentGame.currentTime,
       });

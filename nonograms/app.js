@@ -112,6 +112,14 @@ selectCrossword(5, optionsCrossword);
 optionsWrapper.append(optionsComplexity);
 optionsWrapper.append(optionsCrossword);
 
+// Создание модального окна
+const modal = document.createElement('div');
+modal.classList.add('modal');
+const modalContent = document.createElement('div');
+modalContent.classList.add('modal-content');
+modal.append(modalContent);
+modal.addEventListener('contextmenu', (e) => e.preventDefault());
+
 // Создание контейнера и кнопок, навешивание на них слушателей
 const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('buttons');
@@ -180,15 +188,10 @@ buttonSolution.addEventListener('click', (e) => {
   e.preventDefault();
   const { difficult, level } = currentGame;
   fillCells(hints[difficult][level]);
+  const blockCells = document.querySelector('.block-cells');
+  blockCells.classList.add('blocked');
   stopTime();
 });
-
-// Создание модального окна
-const modal = document.createElement('div');
-modal.classList.add('modal');
-const modalContent = document.createElement('div');
-modalContent.classList.add('modal-content');
-modal.append(modalContent);
 
 header.append(optionsWrapper, buttonContainer);
 body.prepend(header, container, buttonSolution, modal);

@@ -15,7 +15,8 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
-  gap: 12px;
+  max-width: 1200px;
+  gap: 10px;
   justify-content: center;
   padding: 0 30px 30px 30px;
   margin: auto;
@@ -40,6 +41,8 @@
 
   align-self: center;
   gap: 10px;
+
+  z-index: 100;
 }
 
 .header-content {
@@ -79,13 +82,16 @@
 }
 
 .container {
+  position: relative;
   display: flex;
-  width: 450px;
+  width: 470px;
   aspect-ratio: 1 / 1;
   flex-wrap: wrap;
 
   align-self: center;
   justify-self: center;
+
+  z-index: 1;
 }
 
 .timer {
@@ -108,7 +114,7 @@
   display: flex;
   flex-direction: row;
 
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .options {
@@ -140,10 +146,10 @@
 .buttons {
   display: flex;
   flex-direction: row;
-
+  width: 100%;
   gap: 20px;
 
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .button {
@@ -171,6 +177,8 @@
 .button-solution {
   width: 30%;
   align-self: center;
+
+  z-index: 100;
 }
 
 .cols {
@@ -230,6 +238,7 @@
   width: 70%;
   height: 70%;
 
+  z-index: 1;
   box-sizing: border-box;
 }
 
@@ -287,16 +296,29 @@
   display: none;
   opacity: 0;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   background-color: #aaaaaa75;
 }
 
+.block-cells {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  z-index: 0;
+}
+
+.blocked {
+  z-index: 2;
+}
+
 .modal-content {
-  width: 100px;
-  height: 100px;
+  position: relative;
+  width: 100%;
+  height: 450px;
 }
 
 .hint {
