@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
 :root {
   --border-color: #000;
-  --background-light: rgba(255, 255, 255, 0.767);
+  --background-light: rgb(238, 238, 238);
   --background-dark: rgba(0, 0, 0, 0.603);
   --background-white: rgb(255, 255, 255);
-  --background-transparent: rgba(255, 255, 255, 0);
-  --border-bold: 3px solid rgb(0, 0, 0);
+  --border-bold: 3px solid;
 }
 
 body {
@@ -23,6 +24,8 @@ body {
   gap: 15px;
   justify-content: center;
   padding: 0 30px 30px 30px;
+
+  font-family: 'Protest Guerrilla', sans-serif;
 }
 
 .light {
@@ -31,7 +34,8 @@ body {
 
 .dark {
   background: var(--background-dark);
-  color: white;
+  color: var(--background-light);
+  --border-color: var(--background-light);
 }
 
 .header {
@@ -40,7 +44,7 @@ body {
   flex-direction: column;
 
   align-self: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .header-content {
@@ -91,7 +95,7 @@ body {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: var(--border-bold);
+  border: var(--border-bold) var(--border-color);
   border-collapse: collapse;
 
   font-size: 20px;
@@ -99,7 +103,7 @@ body {
 
 .options-wrapper {
   width: 100%;
-  height: 40px;
+  height: 30px;
   display: flex;
   flex-direction: row;
 
@@ -108,7 +112,7 @@ body {
 
 .options {
   width: 35%;
-  height: 80%;
+  height: 90%;
   background: inherit;
   color: inherit;
   text-align: center;
@@ -116,6 +120,8 @@ body {
   appearance: none;
   border-radius: 10px;
   cursor: pointer;
+
+  font-family: 'Protest Guerrilla', sans-serif;
 }
 
 .option {
@@ -145,6 +151,7 @@ body {
   width: 20%;
   background: inherit;
   color: inherit;
+  font-family: 'Protest Guerrilla', sans-serif;
   font-size: 0.8em;
   padding: 5px;
 
@@ -170,8 +177,8 @@ body {
   grid-template-rows: 1fr;
   width: 70%;
   height: 30%;
-  border-bottom: var(--border-bold);
-  border-top: var(--border-bold);
+  border-bottom: var(--border-bold) var(--border-color);
+  border-top: var(--border-bold) var(--border-color);
 }
 
 .cols-5 {
@@ -196,8 +203,8 @@ body {
   width: 30%;
   height: 70%;
 
-  border-right: var(--border-bold);
-  border-left: var(--border-bold);
+  border-right: var(--border-bold) var(--border-color);
+  border-left: var(--border-bold) var(--border-color);
 }
 
 .rows-5 {
@@ -223,7 +230,6 @@ body {
   height: 70%;
 
   box-sizing: border-box;
-  background-color: transparent;
 }
 
 .cells-5 {
@@ -244,7 +250,6 @@ body {
 .cell {
   border-right: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
-  box-sizing: border-box;
 }
 
 .col {
@@ -258,7 +263,7 @@ body {
 }
 
 .col:nth-last-child(1) {
-  border-right: var(--border-bold);
+  border-right: var(--border-bold) var(--border-color);
 }
 
 .row {
@@ -273,7 +278,7 @@ body {
 }
 
 .row:nth-last-child(1) {
-  border-bottom: var(--border-bold);
+  border-bottom: var(--border-bold) var(--border-color);
 }
 
 .modal {
@@ -317,10 +322,6 @@ body {
 
 .cross {
   background: center / contain no-repeat url('./assets/png/cross.png');
-}
-
-.dark .fill {
-  background: var(--background-light);
 }
 
 /*.cross {
