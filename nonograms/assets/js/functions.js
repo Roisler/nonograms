@@ -54,11 +54,9 @@ const fillCells = (matrix) => {
 const getWinTable = () => {
   const table = JSON.parse(localStorage.getItem(tableKey));
   if (!table) {
-    console.log('Вы еще не сыграли ни одной игры!');
-  } else {
-    table.sort((a, b) => Number(a.time.split(':')[1]) - Number(b.time.split(':')[1]));
-    return table;
+    return false;
   }
+  table.sort((a, b) => Number(a.time.split(':')[1]) - Number(b.time.split(':')[1]));
   return table;
 };
 
@@ -99,10 +97,6 @@ const changeTheme = (theme, mainElement, themeChangeElement) => {
   mainElement.classList.remove('dark');
   mainElement.classList.add(theme);
 };
-
-/* const updateStatusButton = (buttons) => {
-
-} */
 
 export {
   generateArrHints,

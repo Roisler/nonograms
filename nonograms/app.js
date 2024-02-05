@@ -40,7 +40,11 @@ score.textContent = ct.scoreText;
 score.addEventListener('click', (e) => {
   e.preventDefault();
   const table = getWinTable();
-  showModal(table, 'score', modal);
+  if (table) {
+    showModal(table, 'score', modal);
+  } else {
+    showModal(table, 'errorSave', modal);
+  }
 });
 
 const themeSelector = document.createElement('div');
@@ -190,6 +194,8 @@ buttonSolution.addEventListener('click', (e) => {
   const blockCells = document.querySelector('.block-cells');
   blockCells.classList.add('blocked');
   stopTime();
+
+  saveButton.disabled = true;
 });
 
 header.append(optionsWrapper, buttonContainer);

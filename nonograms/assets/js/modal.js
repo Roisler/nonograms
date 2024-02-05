@@ -34,9 +34,10 @@ const showScores = (data, modalContent, modalData) => {
 };
 
 const showWin = (data, modalContent, modalData) => {
+  const seconds = Math.floor((data.currentTime % 60000) / 1000);
   const modalText = document.createElement('div');
   modalText.classList.add('modal-text');
-  modalText.textContent = `${winText}${data.currentTime} seconds!`;
+  modalText.textContent = `${winText}${seconds} seconds!`;
   modalData.append(modalText);
   modalContent.append(modalData);
 };
@@ -46,6 +47,7 @@ const showModal = (data, type, modal) => {
     score: 'Scores',
     win: 'You win',
     error: 'Start a new game or reset current game',
+    errorSave: 'You have no games won',
   };
 
   modal.replaceChildren();
@@ -73,7 +75,9 @@ const showModal = (data, type, modal) => {
     win: showWin,
   };
 
-  mappingShow[type](data, modalContent, modalData);
+  if (mappingShow[type]) {
+    mappingShow[type](data, modalContent, modalData);
+  }
 };
 
 export {

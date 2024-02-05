@@ -36,6 +36,8 @@ const resetGame = (game, timer) => {
   timerElement.textContent = getTime(currentGame.currentTime);
   const cells = document.querySelectorAll('.cell');
 
+  const saveButton = document.querySelector('.button-save');
+  saveButton.disabled = false;
   const blockCells = document.querySelector('.block-cells');
   blockCells.classList.remove('blocked');
   cells.forEach((e) => {
@@ -59,6 +61,9 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
 
   currentGame.difficult = difficult;
   currentGame.level = level;
+
+  const saveButton = document.querySelector('.button-save');
+  saveButton.disabled = false;
 
   const collsContainer = document.createElement('div');
   collsContainer.classList.add('cols');
