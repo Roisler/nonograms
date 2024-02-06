@@ -1,4 +1,4 @@
-import { errorSound, winSound, soundStatus } from './audio.js';
+import { winSound, soundStatus } from './audio.js';
 import { winText } from './constants.js';
 
 const closeModal = (modal) => {
@@ -88,12 +88,7 @@ const showModal = (data, type, modal) => {
 
   if (mappingShow[type]) {
     mappingShow[type](data, modalContent, modalData);
-  } else if (soundStatus.on) {
-    errorSound.play();
   }
 };
 
-export {
-  closeModal,
-  showModal,
-};
+export { showModal, closeModal };
