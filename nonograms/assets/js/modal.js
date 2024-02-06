@@ -44,7 +44,7 @@ const showWin = (data, modalContent, modalData) => {
   if (soundStatus.on) {
     winSound.play();
   }
-  const seconds = Math.floor((data.currentTime % 60000) / 1000);
+  const seconds = Math.floor((data.currentTime / 1000));
   const modalText = document.createElement('div');
   modalText.classList.add('modal-text');
   modalText.textContent = `${winText}${seconds} seconds!`;
