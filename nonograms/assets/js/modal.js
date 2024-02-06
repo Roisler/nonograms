@@ -1,4 +1,4 @@
-import { errorSound } from './audio.js';
+import { errorSound, winSound, soundStatus } from './audio.js';
 import { winText } from './constants.js';
 
 const closeModal = (modal) => {
@@ -41,6 +41,9 @@ const showScores = (data, modalContent, modalData) => {
 };
 
 const showWin = (data, modalContent, modalData) => {
+  if (soundStatus.on) {
+    winSound.play();
+  }
   const seconds = Math.floor((data.currentTime % 60000) / 1000);
   const modalText = document.createElement('div');
   modalText.classList.add('modal-text');
@@ -85,7 +88,7 @@ const showModal = (data, type, modal) => {
 
   if (mappingShow[type]) {
     mappingShow[type](data, modalContent, modalData);
-  } else {
+  } else if (soundStatus.on) {
     errorSound.play();
   }
 };

@@ -43,7 +43,7 @@
 
   align-self: center;
   gap: 10px;
-
+  padding-top: 5px;
   z-index: 100;
 }
 
@@ -53,6 +53,14 @@
   justify-content: space-between;
 
   align-items: center;
+}
+
+.change-container {
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .logo {
@@ -69,10 +77,27 @@
   cursor: pointer;
 }
 
-.theme {
+.theme,
+.sound {
   width: 30px;
   height: 30px;
   cursor: pointer;
+}
+
+.light .sound {
+  background: center / contain no-repeat url('./assets/png/off-sound-dark.png');
+}
+
+.dark .sound {
+  background: center / contain no-repeat url('./assets/png/off-sound-light.png');
+}
+
+.light .on {
+  background: center / contain no-repeat url('./assets/png/on-sound-dark.png');
+}
+
+.dark .on {
+  background: center / contain no-repeat url('./assets/png/on-sound-light.png');
 }
 
 .theme.light {

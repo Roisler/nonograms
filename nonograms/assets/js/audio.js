@@ -1,3 +1,5 @@
+export const soundStatus = { on: true };
+
 export const crossSound = new Audio('./assets/sounds/cross.mp3');
 
 export const clickSound = new Audio('./assets/sounds/click.mp3');

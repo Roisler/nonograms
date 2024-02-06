@@ -91,13 +91,13 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
   // Действие при клике на ячейку
 
   const clickCell = (cell) => {
-    if (cell.classList.contains('fill')) {
-      cell.classList.remove('fill');
-      sound.emptySound.play();
-    } else {
-      cell.classList.add('fill');
-      sound.clickSound.play();
+    if (sound.soundStatus.on) {
+      const currentSound = cell.classList.contains('fill')
+        ? sound.emptySound
+        : sound.clickSound;
+      currentSound.play();
     }
+    cell.classList.toggle('fill');
     cell.classList.remove('cross');
     if (!currentGame.currentTime || currentGame.currentTime === time) {
       timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
@@ -107,7 +107,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
-      sound.winSound.play();
       saveButton.disabled = true;
       setWinTable({
         level, difficult, time: currentGame.currentTime,
@@ -133,10 +132,11 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       // eslint-disable-next-line no-loop-func
       cell.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        if (e.target.classList.contains('cross')) {
-          sound.emptySound.play();
-        } else {
-          sound.crossSound.play();
+        if (sound.soundStatus.on) {
+          const currentSound = e.target.classList.contains('cross')
+            ? sound.emptySound
+            : sound.crossSound;
+          currentSound.play();
         }
         if (!currentGame.currentTime) {
           timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);

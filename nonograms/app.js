@@ -8,6 +8,7 @@ import {
 } from './assets/js/functions.js';
 
 import { showModal } from './assets/js/modal.js';
+import { soundStatus } from './assets/js/audio.js';
 
 const currentGame = {
   difficult: 5,
@@ -47,8 +48,20 @@ score.addEventListener('click', (e) => {
   }
 });
 
+const changeVisualContainer = document.createElement('div');
+changeVisualContainer.classList.add('change-container');
+const soundElement = document.createElement('div');
+soundElement.classList.add('sound', 'on');
+soundElement.addEventListener('click', (e) => {
+  const sound = soundStatus;
+  sound.on = !sound.on;
+  e.target.classList.toggle('on');
+});
+
 const themeSelector = document.createElement('div');
 themeSelector.classList.add('theme', 'light');
+
+changeVisualContainer.append(soundElement, themeSelector);
 
 themeSelector.addEventListener('click', (e) => {
   e.preventDefault();
@@ -59,7 +72,7 @@ themeSelector.addEventListener('click', (e) => {
   }
 });
 
-headerContent.append(logoElement, score, themeSelector);
+headerContent.append(logoElement, score, changeVisualContainer);
 header.append(headerContent);
 
 // Создание основного контейнера с ячейками
