@@ -138,6 +138,12 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
             : sound.crossSound;
           currentSound.play();
         }
+        if (!currentGame.currentTime) {
+          timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
+        }
+        e.target.classList.remove('fill');
+        e.target.classList.toggle('cross');
+
         const row = Math.floor(e.target.id / difficult);
         const id = e.target.id % difficult;
         currentGame.currentmatrix[row][id] = 0;
@@ -150,11 +156,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
           blockCells.classList.add('blocked');
           showModal(currentGame, 'win', modal);
         }
-        if (!currentGame.currentTime) {
-          timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
-        }
-        e.target.classList.remove('fill');
-        e.target.classList.toggle('cross');
       });
       cellRow.append(cell);
     }
