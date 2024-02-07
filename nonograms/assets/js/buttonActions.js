@@ -138,6 +138,18 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
             : sound.crossSound;
           currentSound.play();
         }
+        const row = Math.floor(e.target.id / difficult);
+        const id = e.target.id % difficult;
+        currentGame.currentmatrix[row][id] = 0;
+        if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
+          clearInterval(timerId);
+          saveButton.disabled = true;
+          setWinTable({
+            level, difficult, time: currentGame.currentTime,
+          });
+          blockCells.classList.add('blocked');
+          showModal(currentGame, 'win', modal);
+        }
         if (!currentGame.currentTime) {
           timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
         }
