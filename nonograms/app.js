@@ -7,7 +7,7 @@ import {
   getRandom, changeTheme, getWinTable, fillCells,
 } from './assets/js/functions.js';
 
-import { showModal } from './assets/js/modal.js';
+import { showModal, closeModal } from './assets/js/modal.js';
 import { soundStatus } from './assets/js/audio.js';
 
 const currentGame = {
@@ -24,6 +24,7 @@ body.classList.add('page', 'light');
 // Создание модального окна
 const modal = document.createElement('div');
 modal.classList.add('modal');
+modal.addEventListener('click', (e) => closeModal(e.target));
 
 // Создание header
 const header = document.createElement('header');

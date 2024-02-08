@@ -367,6 +367,7 @@
   flex-direction: column;
   gap: 20px;
   width: 50%;
+  max-width: 600px;
   background-color: var(--background-light);
 
   border: 2px solid var(--border-color);
