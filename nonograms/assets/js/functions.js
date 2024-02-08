@@ -35,16 +35,22 @@ const initialMatrix = (difficult) => {
 };
 
 // Проверка на совпадение матрицы решаемого кроссворда с текущей
-const isEqual = (arr, hint) => JSON.stringify(arr) === JSON.stringify(hint);
+const isEqual = (arr, hint) => {
+  const arr2 = arr.map((row) => row.map((el) => (el === 0.5 ? 0 : el)));
+  return JSON.stringify(arr2) === JSON.stringify(hint);
+};
 
 // Закрашивание ячеек по сохраненной матрице
 const fillCells = (matrix) => {
   const flatMatrix = matrix.flat(Infinity);
   const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => {
-    if (flatMatrix[cell.id]) {
+    if (flatMatrix[cell.id] === 1) {
       cell.classList.remove('cross');
       cell.classList.add('fill');
+    } else if (flatMatrix[cell.id] === 0.5) {
+      cell.classList.remove('fill');
+      cell.classList.add('cross');
     } else {
       cell.classList.remove('cross');
       cell.classList.remove('fill');

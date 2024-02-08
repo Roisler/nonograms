@@ -104,7 +104,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
     }
     const row = Math.floor(cell.id / difficult);
     const id = cell.id % difficult;
-    currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0 ? 1 : 0;
+    currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] < 1 ? 1 : 0;
     if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
       clearInterval(timerId);
       saveButton.disabled = true;
@@ -146,7 +146,7 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
 
         const row = Math.floor(e.target.id / difficult);
         const id = e.target.id % difficult;
-        currentGame.currentmatrix[row][id] = 0;
+        currentGame.currentmatrix[row][id] = currentGame.currentmatrix[row][id] === 0.5 ? 0 : 0.5;
         if (isEqual(currentGame.currentmatrix, hints[difficult][level])) {
           clearInterval(timerId);
           saveButton.disabled = true;
@@ -160,24 +160,6 @@ const startGame = (game, difficult, level, timerElement, wrapper, matrix = null,
       cellRow.append(cell);
     }
     cellsContainer.append(cellRow);
-
-  /* for (let i = 0; i < difficult ** 2; i += 1) {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.setAttribute('id', i);
-    cellsContainer.append(cell);
-
-    // Навешивание слушателей на ячейку
-    cell.addEventListener('click', (e) => clickCell(e.target));
-    // eslint-disable-next-line no-loop-func
-    cell.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-      if (!currentGame.currentTime) {
-        timerId = setInterval(() => startTime(game, timer, timerInterval), timerInterval);
-      }
-      e.target.classList.remove('fill');
-      e.target.classList.toggle('cross');
-    }); */
   }
 
   rowsContainer.classList.add(`rows-${difficult}`);
